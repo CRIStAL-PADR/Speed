@@ -1,8 +1,20 @@
+
 import fallerlib
+
+
 fallerlib.init("172.17.217.217")
 
-IP_master = "172.17.217.217"
-IP_slave = "172.17.217.60"
-fallerlib.startM(IP_master, 1 , 1)
-allerlib.stopM(IP_master,1)
+t = fallerlib.getOtherEsp("172.17.217.217")
+print("résultat est ", t)
+	
 
+#fallerlib.start(fallerlib.MotorChassis, fallerlib.MotorDirectionForward)
+#fallerlib.start(fallerlib.MotorSpreader,fallerlib.MotorDirectionBackward)
+
+
+
+fallerlib.change_speed(fallerlib.MotorSpreader, 10)
+fallerlib.change_speed(fallerlib.MotorChassis, -17)
+
+
+#fallerlib.stop(fallerlib.MotorSpreader)
