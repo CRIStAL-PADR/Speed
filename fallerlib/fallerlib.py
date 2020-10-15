@@ -2,6 +2,7 @@
 """ Comments for all the librairy """
 
 import requests
+import re
 
 IP_master= "172.17.217.217"
 IP_slave= "172.17.217.61"
@@ -14,7 +15,7 @@ MotorDirectionForward = 1
 MotorDirectionBackward = -1
 
 # The amount of time to use before the HTTP connection to the board is considered as too long and we thus exit
-# by throwing an exception of type requests.exceptions.ConnectTimoutException. 
+# by throwing an RuntimeError of type requests.RuntimeErrors.ConnectTimoutRuntimeError. 
 timeout = 1.0
 
 def getMotorInfoFromNumber(sNr):
@@ -25,13 +26,17 @@ def getMotorInfoFromNumber(sNr):
     """
     global IP_master, IP_slave 
     
+    if not isinstance(sNr, int):
+        raise TypeError()
+    
     if MotorSpreader == sNr:
         return (IP_slave, 1)
     elif MotorCrab == sNr:
         return (IP_slave, 2)
     elif MotorChassis == sNr:
         return (IP_master, 1)
-    raise Exception("Invalid motor number, must be MotorSpreader, MotorCrab or MotorChassis, got "+str(sNr))
+        
+    raise RuntimeError("Invalid motor number, must be MotorSpreader, MotorCrab or MotorChassis, got "+str(sNr))
 
 
 def start(sNr,turn):
@@ -43,18 +48,18 @@ def start(sNr,turn):
         start(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
     """
     global IP_master, IP_slave, timeout
-        
+            
     if turn not in [MotorDirectionForward, MotorDirectionBackward]:
-        raise Exception("invalid parameter, turn must be either -1 or 1. Got " +str(turn))			
+        raise RuntimeError("Invalid parameter, turn must be either MotorDirectionForward or MotorDirectionBackward. Got " +str(turn))			
     
     ip, numMotor = getMotorInfoFromNumber(sNr)
     r = requests.get("http://"+ip+"/startM?sNr="+str(numMotor)+"&turn="+str(turn),timeout=timeout)
  
     if r.status_code !=200:
-        raise Exception("Unable to control the motor, "+str(r.status_code))
+        raise RuntimeError("Unable to control the motor, "+str(r.status_code))
 
     if r.text != "ok":
-        raise Exception("Able to controle the motor but got not OK answer: "+r.text)
+        raise RuntimeError("Able to controle the motor but got not OK answer: "+r.text)
         
 
 def stop(sNr):
@@ -67,9 +72,9 @@ def stop(sNr):
     r= requests.get("http://"+ip+"/stopM?sNr="+str(numMotor), timeout=timeout)
     print(r.text)
     if r.text != "ok":
-        raise Exception("Able to controle the motor bur got not ok answer:"+r.text)
+        raise RuntimeError("Able to controle the motor bur got not ok answer:"+r.text)
     if r.status_code !=200:
-        raise Exception("Unable to stop the motor,"+str(r.status_code) )
+        raise RuntimeError("Unable to stop the motor,"+str(r.status_code) )
 
 
     
@@ -90,28 +95,31 @@ def change_speed(sNr, diff):
      """
     ip, numMotor = getMotorInfoFromNumber(sNr)
     if diff < -70 or diff > 100:
-        raise Exception("Invalide parameter !!!! diff must be between -70 and 100:"+str(diff))
+        raise RuntimeError("Invalide parameter !!!! diff must be between -70 and 100:"+str(diff))
     
-    r= requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff), timeout=timeout)
-    print (r.text)
-
+    r = requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff), timeout=timeout)
+    
     if r.status_code != 200: 
-        raise Exception("Unable to change the speed of the motor,"+str(r.status_code))
-        return X
+        raise RuntimeError("Unable to change the speed of the motor,"+str(r.status_code))
+    
+    result = re.search("neuer Speed=\s+(\d+)", r.text)
+    num = int(result.groups()[0])
+    return num
+    
 
-def getBat():
+def get_battery():
     global IP_master, IP_slave, timeout
     
     r1=requests.get("http://"+IP_master+"/getBat?n=1", timeout=timeout)
     r2=requests.get("http://"+IP_slave+"/getBat?n=2", timeout=timeout)
 
     if r1.status_code != 200: 
-        raise Exception("Please check if the r1 battery is correctly powered")
+        raise RuntimeError("Please check if the r1 battery is correctly powered")
     
     if r2.status_code != 200: 
-        raise Exception("Please check if the r2 battery is correctly powered")
-   
-    return (r1.text, r2.text)
+        raise RuntimeError("Please check if the r2 battery is correctly powered")
+    
+    return (int(r1.text), int(r2.text))
     
 def init(IP):
     """ Comments about changePWM function
@@ -122,16 +130,16 @@ The purpose of this function is to initialize the IP address of the master and o
     """
     global IP_master, IP_slave
     IP_master= IP
-    IP_slave = getOtherEsp(IP)
+    IP_slave = get_other_esp(IP)
     
-def getOtherEsp(IP):
+def get_other_esp(IP):
     """ Comments about changePWM function
 	This function has the role of launching a request to obtain the IP address of the slave
     """
     global timeout
     r = requests.get("http://" + IP +"/getOtherEsp", timeout=timeout)
     if r.status_code != 200:
-        raise Exception ("I failed to get the IP address of the slave. Check if the latter is correctly supplied then try again")
+        raise RuntimeError ("I failed to get the IP address of the slave. Check if the latter is correctly supplied then try again")
 
     return r.text 
 

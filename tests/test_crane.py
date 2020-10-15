@@ -19,7 +19,9 @@ class TestCrane(unittest.TestCase):
         """Test that the init function is returning an exception if an invalid IP is given"""       
         fallerlib.init("172.17.217.217")
         for motor in [fallerlib.MotorCrab, fallerlib.MotorChassis, fallerlib.MotorSpreader]:
-            t = fallerlib.change_speed(motor, 0)        
+            t = fallerlib.change_speed(motor, 0)  
+            
+            self.assertEqual(type(t), int)                  
             t1 = fallerlib.change_speed(motor, 10)
             if t1 == t:
                 t2 = fallerlib.change_speed(motor, -20)
@@ -32,7 +34,7 @@ class TestCrane(unittest.TestCase):
             t = fallerlib.change_speed("MotorOne", 10)        
 
         # Here we test that an out of range motor number rise an exception
-        with self.assertRaises(TypeError):
+        with self.assertRaises(RuntimeError):
             t = fallerlib.change_speed(123, 20)        
 
         ## Here we tests that weird values provided as parameter are rejected with an exception
@@ -43,22 +45,46 @@ class TestCrane(unittest.TestCase):
     def test_start(self):
         fallerlib.init("172.17.217.217")
         for motor in [fallerlib.MotorCrab, fallerlib.MotorChassis, fallerlib.MotorSpreader]:
-            t = fallerlib.start(motor)        
-            
+            for direction in [fallerlib.MotorDirectionForward, fallerlib.MotorDirectionBackward]:        
+                fallerlib.start(motor, direction)        
+
+    def test_startInvalid(self):
+        fallerlib.init("172.17.217.217")
+        with self.assertRaises(RuntimeError):
+            fallerlib.start(-5, fallerlib.MotorDirectionForward)        
+
+        with self.assertRaises(RuntimeError):
+            fallerlib.start(fallerlib.MotorCrab, -10)        
+
+        with self.assertRaises(Exception):
+            fallerlib.start("Yo", -10) 
+
+        with self.assertRaises(RuntimeError):
+            fallerlib.start(fallerlib.MotorCrab, "1")        
+             
     def test_stop(self):
         fallerlib.init("172.17.217.217")
         for motor in [fallerlib.MotorCrab, fallerlib.MotorChassis, fallerlib.MotorSpreader]:
-            t = fallerlib.stop(motor)        
+                fallerlib.stop(motor)        
+
+    def test_stopInvalid(self):
+        fallerlib.init("172.17.217.217")
+        with self.assertRaises(RuntimeError):
+            fallerlib.stop(-5)        
+
+        with self.assertRaises(TypeError):
+            fallerlib.stop("Yo") 
 
     def test_get_battery(self):
         fallerlib.init("172.17.217.217")
-        b = fallerlib.get_battery(motor)        
-        fallerlib.assertEqual(type(b), tuple)
-
+        b = fallerlib.get_battery()        
+        self.assertEqual(type(b), tuple)
+        self.assertEqual(type(b[0]), int)
+        
     def test_get_other_esp(self):
         fallerlib.init("172.17.217.217")
         b = fallerlib.get_other_esp("172.17.217.217")        
-        fallerlib.assertEqual(type(b), tuple)
+        self.assertNotEqual(b, None)
 
 if __name__ == '__main__':
     unittest.main()
