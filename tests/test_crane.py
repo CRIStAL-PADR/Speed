@@ -19,10 +19,10 @@ class TestCrane(unittest.TestCase):
         """Test that the init function is returning an exception if an invalid IP is given"""       
         fallerlib.init("172.17.217.217")
         for motor in [fallerlib.MotorCrab, fallerlib.MotorChassis, fallerlib.MotorSpreader]:
-            t = fallerlib.change_speed(fallerlib.MotorCrab)        
-            t1 = fallerlib.change_speed(10)
+            t = fallerlib.change_speed(motor, 0)        
+            t1 = fallerlib.change_speed(motor, 10)
             if t1 == t:
-                t2 = fallerlib.change_speed(-20)
+                t2 = fallerlib.change_speed(motor, -20)
                 self.assertNotEqual(t,t2)
 
     def test_change_speed_invalid(self):
