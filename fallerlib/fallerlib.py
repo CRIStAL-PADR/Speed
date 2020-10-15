@@ -39,6 +39,16 @@ def getMotorInfoFromNumber(sNr):
     raise RuntimeError("Invalid motor number, must be MotorSpreader, MotorCrab or MotorChassis, got "+str(sNr))
 
 
+def step(sNr,turn):
+    """ Comments about the start function
+        :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
+        :param turn: It indicates the direction in which we would like to run the engine. 1 for moving forward and -1 for moving backward.
+
+    Example:
+        start(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
+    """
+    start(sNr, turn)
+
 def start(sNr,turn):
     """ Comments about the start function
         :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
@@ -77,8 +87,10 @@ def stop(sNr):
         raise RuntimeError("Unable to stop the motor,"+str(r.status_code) )
 
 
-    
-	
+def set_speed(sNr, speed):
+    current = change_speed(sNr, 0) 
+    diff = speed-current           
+    return change_speed(sNr, diff)   
 
 def change_speed(sNr, diff):
     global IP_master, IP_slave, timeout
