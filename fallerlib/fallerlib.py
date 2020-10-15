@@ -13,8 +13,9 @@ MotorChassis = 3
 MotorDirectionForward = 1
 MotorDirectionBackward = -1
 
-
-
+# The amount of time to use before the HTTP connection to the board is considered as too long and we thus exit
+# by throwing an exception of type requests.exceptions.ConnectTimoutException. 
+timeout = 1.0
 
 def getMotorInfoFromNumber(sNr):
     """ Comments about getMotorInfoFromNumber function
@@ -41,13 +42,13 @@ def start(sNr,turn):
     Example:
         start(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
     """
-    global IP_master, IP_slave
+    global IP_master, IP_slave, timeout
         
     if turn not in [MotorDirectionForward, MotorDirectionBackward]:
         raise Exception("invalid parameter, turn must be either -1 or 1. Got " +str(turn))			
     
     ip, numMotor = getMotorInfoFromNumber(sNr)
-    r = requests.get("http://"+ip+"/startM?sNr="+str(numMotor)+"&turn="+str(turn))
+    r = requests.get("http://"+ip+"/startM?sNr="+str(numMotor)+"&turn="+str(turn),timeout=timeout)
  
     if r.status_code !=200:
         raise Exception("Unable to control the motor, "+str(r.status_code))
@@ -60,10 +61,10 @@ def stop(sNr):
     """ Comments about the stopfunction
         see def start (sNr, turn) parameters
     """
-    global IP_master, IP_slave
+    global IP_master, IP_slave, timeout
     
     ip, numMotor = getMotorInfoFromNumber(sNr)
-    r= requests.get("http://"+ip+"/stopM?sNr="+str(numMotor))
+    r= requests.get("http://"+ip+"/stopM?sNr="+str(numMotor), timeout=timeout)
     print(r.text)
     if r.text != "ok":
         raise Exception("Able to controle the motor bur got not ok answer:"+r.text)
@@ -75,7 +76,7 @@ def stop(sNr):
 	
 
 def change_speed(sNr, diff):
-    global IP_master, IP_slave
+    global IP_master, IP_slave, timeout
     """ Comments about changePWM function
 	This function allows us to modify the engine speed while varying its cyclic ratio. il prend en paraamètre sNr et diff
 	
@@ -91,7 +92,7 @@ def change_speed(sNr, diff):
     if diff < -70 or diff > 100:
         raise Exception("Invalide parameter !!!! diff must be between -70 and 100:"+str(diff))
     
-    r= requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff))
+    r= requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff), timeout=timeout)
     print (r.text)
 
     if r.status_code != 200: 
@@ -99,11 +100,10 @@ def change_speed(sNr, diff):
         return X
 
 def getBat():
-    global IP_master, IP_slave
+    global IP_master, IP_slave, timeout
     
-
-    r1=requests.get("http://"+IP_master+"/getBat?n=1")
-    r2=requests.get("http://"+IP_slave+"/getBat?n=2")
+    r1=requests.get("http://"+IP_master+"/getBat?n=1", timeout=timeout)
+    r2=requests.get("http://"+IP_slave+"/getBat?n=2", timeout=timeout)
 
     if r1.status_code != 200: 
         raise Exception("Please check if the r1 battery is correctly powered")
@@ -127,8 +127,9 @@ The purpose of this function is to initialize the IP address of the master and o
 def getOtherEsp(IP):
     """ Comments about changePWM function
 	This function has the role of launching a request to obtain the IP address of the slave
-     """
-    r = requests.get("http://" + IP +"/getOtherEsp")
+    """
+    global timeout
+    r = requests.get("http://" + IP +"/getOtherEsp", timeout=timeout)
     if r.status_code != 200:
         raise Exception ("I failed to get the IP address of the slave. Check if the latter is correctly supplied then try again")
 
