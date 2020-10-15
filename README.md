@@ -9,7 +9,7 @@ To starts the tests you can do:
 
 ```console
 cd tests/
-PYTHONPATH="../fallerlib.py" python3 -m unittest
+PYTHONPATH="../fallerlib" python3 -m unittest
 ```
 
 
