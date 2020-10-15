@@ -3,7 +3,7 @@ import requests
 import fallerlib
 
 class TestCrane(unittest.TestCase):
-    def test_initWithInvalidIP(self):
+    def test_init_with_invalid_ip(self):
         """Test that the init function is returning an exception if an invalid IP is given"""       
         with self.assertRaises(requests.exceptions.ConnectionError):
             fallerlib.init("x6d6q5f4q6fqf")
@@ -11,11 +11,10 @@ class TestCrane(unittest.TestCase):
         with self.assertRaises(requests.exceptions.ConnectTimeout):
             fallerlib.init("172.168.1.1")
 
-    def test_initWithIP(self):
+    def test_init_with_ip(self):
         """Test that the init function is returning an exception if an invalid IP is given"""       
         fallerlib.init("172.17.217.217")
-        self.assertNotEqual(t, None)        
-
+        
     def test_change_speed(self):
         """Test that the init function is returning an exception if an invalid IP is given"""       
         fallerlib.init("172.17.217.217")
@@ -26,7 +25,7 @@ class TestCrane(unittest.TestCase):
                 t2 = fallerlib.change_speed(-20)
                 self.assertNotEqual(t,t2)
 
-    def test_change_speedInvalid(self):
+    def test_change_speed_invalid(self):
         fallerlib.init("172.17.217.217")
         # Here we test that a string is not considered as a valid parameter
         with self.assertRaises(TypeError):
