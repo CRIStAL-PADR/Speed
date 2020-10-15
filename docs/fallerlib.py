@@ -98,7 +98,7 @@ def change_speed(sNr, diff):
         raise Exception("Unable to change the speed of the motor,"+str(r.status_code))
         return X
 
-def getBat(n):
+def getBat():
     global IP_master, IP_slave
     
 
@@ -106,19 +106,28 @@ def getBat(n):
     r2=requests.get("http://"+IP_slave+"/getBat?n=2")
 
     if r1.status_code != 200: 
-        raise Exception("XXXX.R1")
+        raise Exception("Please check if the r1 battery is correctly powered")
     
     if r2.status_code != 200: 
-        raise Exception("XXXX R2.")
-    
+        raise Exception("Please check if the r2 battery is correctly powered")
+   
     return (r1.text, r2.text)
     
 def init(IP):
+    """ Comments about changePWM function
+The purpose of this function is to initialize the IP address of the master and once the IP address of the master is
+ initialized to obtain that of the slave thanks to the getOtherEsp function   
+    
+    
+    """
     global IP_master, IP_slave
     IP_master= IP
     IP_slave = getOtherEsp(IP)
     
 def getOtherEsp(IP):
+    """ Comments about changePWM function
+	This function has the role of launching a request to obtain the IP address of the slave
+     """
     r = requests.get("http://" + IP +"/getOtherEsp")
     if r.status_code != 200:
         raise Exception ("I failed to get the IP address of the slave. Check if the latter is correctly supplied then try again")
