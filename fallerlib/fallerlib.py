@@ -86,22 +86,20 @@ def stop(sNr):
     if r.status_code !=200:
         raise RuntimeError("Unable to stop the motor,"+str(r.status_code) )
 
-
 def get_speed(sNr):
-    t = set_speed(sNr, 0)
-    return t
-
-def set_speed(sNr, speed):
-    current = change_speed(sNr, 0) 
-    diff = current - speed 
-    #return change_speed(sNr, diff)   
-    return  diff 
+    """ Returns the current speed for a motor """    		
+    return change_speed(sNr, 0)
     
-
+def set_speed(sNr, speed):
+    """ set the speed for a motor """    		
+    current = change_speed(sNr, 0) 
+    diff = speed - current 
+    return change_speed(sNr, diff)
+    
 def change_speed(sNr, diff):
     global IP_master, IP_slave, timeout
     """ Comments about changePWM function
-	This function allows us to modify the engine speed while varying its cyclic ratio. il prend en paraamètre sNr et diff
+	This function allows us to modify the engine speed while varying its cyclic ratio. 
 	
        :param sNr:  see def start (sNr, turn) parameters
        :param diff: This parameter is used to vary the speed of the motor. It takes the values 5 between 0 and 100 for the acceleration and 0 and -100 for the slowdown.
@@ -112,8 +110,6 @@ def change_speed(sNr, diff):
 		
      """
     ip, numMotor = getMotorInfoFromNumber(sNr)
-  
-    
     r = requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff), timeout=timeout)
     
     if r.status_code != 200: 
