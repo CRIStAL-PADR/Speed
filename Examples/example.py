@@ -28,7 +28,11 @@ print("Battery level:", levels)
 speed=fallerlib.get_speed(fallerlib.MotorCrab)
 print(speed)
 
-# To change the configured speed for a motor you provide a speed difference to the change_speed function.
-# the value returned is the newspeed. 
-newspeed = fallerlib.change_speed(fallerlib.MotorChassis, diff=30)
+# Each motor can be configured to operate at a specific speed. To retrieve the configured speed you use the get_speed function. 
+newspeed=fallerlib.set_speed(fallerlib.MotorCrab, speed=50)
+print(newspeed)
+
+# To change the configured speed for a motor you can also provide a speed difference to the change_speed function.
+# the value returned is the new speed. 
+newspeed = fallerlib.change_speed(fallerlib.MotorChassis, diff=5)
 print(newspeed)
