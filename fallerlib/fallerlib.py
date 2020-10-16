@@ -16,7 +16,7 @@ MotorDirectionBackward = -1
 
 # The amount of time to use before the HTTP connection to the board is considered as too long and we thus exit
 # by throwing an RuntimeError of type requests.RuntimeErrors.ConnectTimoutRuntimeError. 
-timeout = 1.0
+timeout = 2.5
 
 def getMotorInfoFromNumber(sNr):
     """ Comments about getMotorInfoFromNumber function
@@ -87,10 +87,16 @@ def stop(sNr):
         raise RuntimeError("Unable to stop the motor,"+str(r.status_code) )
 
 
+def get_speed(sNr):
+    t = set_speed(sNr, 0)
+    return t
+
 def set_speed(sNr, speed):
     current = change_speed(sNr, 0) 
-    diff = speed-current           
-    return change_speed(sNr, diff)   
+    diff = current - speed 
+    #return change_speed(sNr, diff)   
+    return  diff 
+    
 
 def change_speed(sNr, diff):
     global IP_master, IP_slave, timeout
@@ -106,8 +112,7 @@ def change_speed(sNr, diff):
 		
      """
     ip, numMotor = getMotorInfoFromNumber(sNr)
-    if diff < -70 or diff > 100:
-        raise RuntimeError("Invalide parameter !!!! diff must be between -70 and 100:"+str(diff))
+  
     
     r = requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff), timeout=timeout)
     
