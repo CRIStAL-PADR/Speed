@@ -21,7 +21,7 @@ while (time.time() -init_time ) < 5.0:
     fallerlib.step(fallerlib.MotorCrab, fallerlib.MotorDirectionBackward)  
 
 # To get the battery state you can use get_battery function. It returns a tuple of each battery detected on the board. 
-levels = fallerlib.get_battery():
+levels = fallerlib.get_battery()
 print("Battery level:", levels)    
    
 # Each motor can be configured to operate at a specific speed. To retrieve the configured speed you use the get_speed function. 
