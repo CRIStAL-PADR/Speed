@@ -14,6 +14,7 @@ You can find more examples in the *examples* directory.
 Install
 -------
 git clone https://github.com/CRIStAL-PADR/Speed.git
+
 The library is in fallerlib/fallerlib.py
 
 Tests
