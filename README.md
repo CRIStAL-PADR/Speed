@@ -9,6 +9,7 @@ fallerlib.init("172.17.217.217")
 fallerlib.set_speed(fallerlib.MotorChassis, 50)
 fallerlib.step(fallerlib.MotorChassis, fallerlib.MotorDirectionBackward)
 ```
+You can find more examples in the *examples* directory.
 
 Install:
 --------
