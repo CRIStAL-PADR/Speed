@@ -1,63 +1,38 @@
 # -*-coding: <Utf-8> -*-
-
 """
- Here is an example of how to use the fallerlib library and the functions that we can perform with it 
- 
+ Here is an example of how to use the fallerlib library and the functions that we can perform with it  
 """
-
 import fallerlib
 import time
-
  
-#This line allows the initialization of the master's IP address and launches a second request to obtain the slave's IP address.
+# Initialization of the board using its ip address.
+# In case of error exception are risen. 
+fallerlib.init("172.17.217.217")
 
-IP = "172.17.217.217"
-fallerlib.init(IP)
+# To move the Crab, SPreader or Chassi on step you can do
+# See help (fallerlib.stept) for more information on the parameters that this function takes
+fallerlib.step(fallerlib.MotorSpreader, fallerlib.MotorDirectionForward)
+fallerlib.step(fallerlib.MotorCrab, fallerlib.MotorDirectionBackward)
+fallerlib.step(fallerlib.MotorChassis, fallerlib.MotorDirectionForward)
 
-#We can possibly check that we have the IP address of the slave we expected with the fallerlib.get_other_esp (IP) function
-t = fallerlib.get_other_esp(IP)
-print(t)
-#This test returns the IP address of the slave to us => the initialization was successfull"""
-
-
-
-#Suppose we want to move the crab, frame and spread simultaneously.
-#See help (fallerlib.start) for more information on the parameters that this function takes
-# The code to do this is as follows
-
-fallerlib.start(fallerlib.MotorSpreader, fallerlib.MotorDirectionForward)
-fallerlib.start(fallerlib.MotorCrab, fallerlib.MotorDirectionBackward)
-fallerlib.start(fallerlib.MotorChassis, fallerlib.MotorDirectionForward)
-
-
-#Suppose we want to move the MotorCrab or one of the motor for 5 seconds. The code to do it is as follows
-# But before writing the code First we have to import time librairy (see line 9)
+# To move the MotorCrab for 5 seconds you can do
 init_time = time.time()
+while (time.time() -init_time ) < 5.0:
+    fallerlib.step(fallerlib.MotorCrab, fallerlib.MotorDirectionBackward)  
 
-while (time.time() -init_time )< 5:
-    x = fallerlib.start(fallerlib.MotorCrab, fallerlib.MotorDirectionBackward)
-    print(time.time() -init_time )
+# To get the battery state you can use get_battery function. It returns a tuple of each battery detected on the board. 
+levels = fallerlib.get_battery():
+print("Battery level:", levels)    
    
-    
+# Each motor can be configured to operate at a specific speed. To retrieve the configured speed you use the get_speed function. 
+speed=fallerlib.get_speed(fallerlib.MotorCrab)
+print(speed)
 
-# After executing a function like moving the motorCrab for 5 seconds, if we want for example to know the state of the battery here is the code
+# Each motor can be configured to operate at a specific speed. To retrieve the configured speed you use the get_speed function. 
+newspeed=fallerlib.set_speed(fallerlib.MotorCrab, speed=50)
+print(newspeed)
 
-for i in fallerlib.get_battery():
-    print("....",i)
-    
-    
-#Suppose we want to move the MotorChassis forward in a given direction and we want to know its current speed to change it or not. 
-#To to that we'll use the get_speed function. here is a code to do that 
-
-t = fallerlib.get_speed(fallerlib.MotorCrab)
-print(t)
-
-#Once we know the current speed we can decide to modify it
-#For this we will use the change_speed function as shown in the following example
-#It can also be displayed on the screen using the print function
-
-t= fallerlib.change_speed(fallerlib.MotorChassis, 30)
-print(t)
-
-
-
+# To change the configured speed for a motor you can also provide a speed difference to the change_speed function.
+# the value returned is the new speed. 
+newspeed = fallerlib.change_speed(fallerlib.MotorChassis, diff=5)
+print(newspeed)
