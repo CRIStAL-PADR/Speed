@@ -7,11 +7,10 @@ Suppose we want to move the MotorCrab or one of the motor for 5 seconds. The cod
 But before writing the code First we have to import time librairy
 
 ```python
-init_time = time.time()
-
-while (time.time() -init_time )< 5:
-    x = fallerlib.start(fallerlib.MotorCrab, fallerlib.MotorDirectionBackward)
-    print(time.time() -init_time )
+import fallerlib
+fallerlib.init("172.17.217.217")
+fallerlib.set_speed(fallerlib.MotorChassis, 50)
+fallerlib.step(fallerlib.MotorChassis, fallerlib.MotorDirectionBackward)
 ```
 
 Install:
