@@ -6,8 +6,8 @@ Example
 ```python
 from speedlib.cranes import faller
 faller.init("172.17.217.217")
-faller.set_speed(fallerlib.MotorChassis, 50)
-faller.step(fallerlib.MotorChassis, fallerlib.MotorDirectionBackward)
+faller.set_speed(faller.MotorChassis, 50)
+faller.step(faller.MotorChassis, faller.MotorDirectionBackward)
 ```
 You can find more examples in the *examples* directory.
 
@@ -22,6 +22,6 @@ Tests
 To starts the unit tests you can do:
 ```console
 cd tests/
-PYTHONPATH=../fallerlib python3 -m unittest
+PYTHONPATH=../ python3 -m unittest
 ```
 
