@@ -4,10 +4,10 @@ A python library to control Faller (c) 180290 models.
 Example
 -------
 ```python
-import fallerlib
-fallerlib.init("172.17.217.217")
-fallerlib.set_speed(fallerlib.MotorChassis, 50)
-fallerlib.step(fallerlib.MotorChassis, fallerlib.MotorDirectionBackward)
+from speedlib import fallerlib as cranelib
+cranelib.init("172.17.217.217")
+cranelib.set_speed(fallerlib.MotorChassis, 50)
+cranelib.step(fallerlib.MotorChassis, fallerlib.MotorDirectionBackward)
 ```
 You can find more examples in the *examples* directory.
 
