@@ -1,5 +1,7 @@
 # SpeedLib
-A python library to operate Speed devices (currently only the Faller (c) 180290 models is supported)
+A python library to operate Speed devices.
+
+Currently only the Faller (c) 180290 models is supported. 
 
 Example
 -------
