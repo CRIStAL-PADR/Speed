@@ -30,18 +30,16 @@ def get_motor_info_from_number(sNr, n = 0):
     """
     
     if n < 0:
-        raise ValueError()
+        raise ValueError(" The value of n must be greater than or equal to 0 but got "+str(n))
     
     if not isinstance(n, int):
-        raise TypeError()
+        raise TypeError("The value of n must be an integer but got  "+str(n))
         
     if not isinstance(sNr, int):
-        raise TypeError()
+        raise TypeError(" The value of n must be an integer but got " +str(sNr))
     
     ip_master = ip_master_n[n] 
     ip_slave = ip_slave_n[n] 
-    
-    
     
     
     
@@ -67,8 +65,7 @@ def step(sNr,turn,n=0):
 
 
     
-    
-# Démarer grueB, motor2, turn=-1       
+         
 def start(sNr, turn, n = 0):
     """ Comments about the start function
         :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
@@ -93,16 +90,13 @@ def start(sNr, turn, n = 0):
         
 def set_speed(sNr, speed, n = 0):
     """ set the speed for a motor """    	
-    
+
     if not isinstance(n, int):
-        raise TypeError()
+        raise TypeError(" The value of n must be an integer ")
     if n < 0:
-        raise ValueError()	
-    if n > len(ip_master_n):
-        raise IndexError()
+        raise ValueError(" The value of n must be greater than or equal to 0 but got "+str(n))	
     
-    
-    current = change_speed(n,sNr, 0) 
+    current = change_speed(sNr, 0, n) 
     diff = speed - current 
     return change_speed(sNr, diff , n=0)    
 
@@ -198,16 +192,12 @@ def get_other_esp(ip):
 	
 if __name__ == "__main__":
     ip = "172.17.217.217"
-    
+    init(ip)
     init(ip)
     
+    print(set_speed(MotorSpreader, 10, 1))
     
-    print(init(ip))
-    
-    init(ip)
-    
-    set_speed(MotorCrab, 1, 5)
-    
+    print(change_speed(MotorSpreader, 2))
 
     
   
