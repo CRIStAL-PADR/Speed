@@ -67,15 +67,15 @@ def step(sNr,turn,n=0):
     start(sNr, turn, n)
 
 
-def start_for(t , sNr, turn , n = 0):
+def start_for(t, sNr, turn , n = 0):
+    t = t*ureg.second
     if t < 0:
         raise ValueError("t must be greater than 0 but got "+str(t))
-    if not isinstance(t, int):
-        raise TypeError("t must be of type integer but got "+str(t))
-    init_time = time.time()
-    while time.time() - init_time < t:
+   
+    init_time = time.time()*ureg.second
+    while time.time()*ureg.second - init_time < t:
         step(sNr, turn, n)
-
+    print(time.time()*ureg.second - init_time)
 
 def start(sNr, turn, n = 0):
     """ Comments about the start function
@@ -207,7 +207,8 @@ if __name__ == "__main__":
     ip = "172.17.217.217"
     init(ip)
     init(ip)
-    start_for(2,MotorCrab,MotorDirectionBackward,1)
+    start_for(30,MotorCrab,MotorDirectionBackward,1)
+    
     
 """
     print(set_speed(MotorSpreader, 10, 1))
