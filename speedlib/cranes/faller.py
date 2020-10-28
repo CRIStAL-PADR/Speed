@@ -4,6 +4,7 @@
 import requests
 import re
 import time
+import asyncio
 
 
 ip_master_n = []
@@ -62,10 +63,15 @@ def step(sNr,turn,n=0):
         start(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
     """
     start(sNr, turn, n)
-
-
     
-         
+def start_for(t, sNr, turn , n = 0):
+    init_time = time.time()
+    print(init_time)
+    while time.time() - init_time < t:
+        step(sNr, turn, n)
+    print(time.time()-init_time)
+
+
 def start(sNr, turn, n = 0):
     """ Comments about the start function
         :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
@@ -86,6 +92,7 @@ def start(sNr, turn, n = 0):
 
     if r.text != "ok":
         raise RuntimeError("Able to controle the motor but got not OK answer: "+r.text)
+    return r.text
         
         
 def set_speed(sNr, speed, n = 0):
@@ -189,16 +196,17 @@ def get_other_esp(ip):
 
     return r.text 
 
-	
+
 if __name__ == "__main__":
+
     ip = "172.17.217.217"
     init(ip)
     init(ip)
+    start_for(10,MotorCrab,MotorDirectionBackward,1)
     
+"""
     print(set_speed(MotorSpreader, 10, 1))
     
     print(change_speed(MotorSpreader, 2))
-
-    
-  
+"""
     

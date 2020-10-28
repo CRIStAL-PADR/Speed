@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="speedlib-fabrice-dedo",
+    name="speedlib-dedo-fabrice",
     version="1.0",
     author="Fabrice Dedo & Damien Marchal",
     author_email="komla-sam-fabrice.dedo@polytech-lille.net",
