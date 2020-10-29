@@ -68,7 +68,7 @@ def step(sNr,turn,n=0):
 
 
 def start_for(t, sNr, turn , n = 0):
-    t = t*ureg.second
+    
     if t < 0:
         raise ValueError("t must be greater than 0 but got "+str(t))
    
@@ -207,12 +207,8 @@ if __name__ == "__main__":
     ip = "172.17.217.217"
     init(ip)
     init(ip)
-    start_for(30,MotorCrab,MotorDirectionBackward,1)
+    start_for(50000000*ureg.nanosecond,MotorChassis,MotorDirectionForward)
     
-    
-"""
     print(set_speed(MotorSpreader, 10, 1))
-    
     print(change_speed(MotorSpreader, 2))
-"""
-    
+
