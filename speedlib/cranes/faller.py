@@ -68,6 +68,18 @@ def step(sNr,turn,n=0):
 
 
 def start_for(t, sNr, turn , n = 0):
+    """
+    Comment about start_for function
+    :param t : This is the time during which we decide to run a motor. The syntax is t * ureg.second
+        It is noted that we can also write t * ureg.millisecond in case we decide to run the engine for t millisecond.
+     :param sNr : See the start function
+     :param turn :See the start function
+     :param n :  See the start function   
+     
+        example
+         start_for(5000*ureg.nanosecond,MotorChassis,MotorDirectionForward)
+         Here we decide to rotate the Chassis forward for 5000 nanosecond
+    """
     
     if t < 0:
         raise ValueError("t must be greater than 0 but got "+str(t))
@@ -114,7 +126,7 @@ def set_speed(sNr, speed, n = 0):
 
 def get_speed(sNr, n=0):
     """ Returns the current speed for a motor """    		
-    return change_speed(sNr, diff , n = 0)
+    return change_speed(sNr, 0 , n = 0)
 
 
 
