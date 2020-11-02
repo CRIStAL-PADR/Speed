@@ -87,7 +87,7 @@ def start_for(t, sNr, turn , n = 0):
     init_time = time.time()*ureg.second
     while time.time()*ureg.second - init_time < t:
         step(sNr, turn, n)
-    print(time.time()*ureg.second - init_time)
+   
 
 def start(sNr, turn, n = 0):
     """ Comments about the start function
