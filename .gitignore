@@ -1,0 +1,9 @@
+# Lines starting with `#` are comments
+
+# Ignore files called 'file.pyc'
+
+faller.pyc
+
+__pycache__/
+
+
