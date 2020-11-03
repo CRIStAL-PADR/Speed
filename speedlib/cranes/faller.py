@@ -26,7 +26,7 @@ timeout = 2.5
 
 
 def get_motor_info_from_number(sNr, n = 0):
-    """ Comments about getMotorInfoFromNumber function
+    """ 
     It takes the number of the motor and the crane as input and returns the  number of the motor with its IP address.
     :param : see def start (sNr, turn) parameters
     
@@ -57,7 +57,7 @@ def get_motor_info_from_number(sNr, n = 0):
     
     
 def step(sNr,turn,n=0):
-    """ Comments about the step function
+    """ 
         :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
         :param turn: It indicates the direction in which we would like to run the engine. 1 for moving forward and -1 for moving backward.
 
@@ -122,27 +122,26 @@ def set_speed(sNr, speed, n = 0):
     
     current = change_speed(sNr, 0, n) 
     diff = speed - current 
-    return change_speed(sNr, diff , n=0)    
+    return change_speed(sNr, diff , n)    
 
 def get_speed(sNr, n=0):
     """ Returns the current speed for a motor """    		
-    return change_speed(sNr, 0 , n = 0)
+    return change_speed(sNr, 0 , n)
 
 
 
 def change_speed(sNr, diff, n=0):
-    global ip_master, ip_slave, timeout
-    """ Comments about change_speed function
-	This function allows us to modify the engine speed while varying its cyclic ratio. 
+    """
+    This function allows us to modify the engine speed while varying its cyclic ratio. 
 	
        :param sNr:  see def start (sNr, turn, n = 0) parameters
        :param diff: This parameter is used to vary the speed of the motor. Il s'agit d'un entier.
        It should be noted that the maximum speed that the motor can reach is 100 and the motor speed cannot drop below 30
 	   :n : Il is the number of the crane
-     Example:
+    Example:
 		change_speed( MotorSpreader, -60, 2 ) : allows to decrease the motorspeed 3 by 60
-		
      """
+    global ip_master, ip_slave, timeout
 		
     
     if not isinstance (diff, int):

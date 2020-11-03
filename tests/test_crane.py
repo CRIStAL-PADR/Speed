@@ -66,6 +66,37 @@ class TestCrane(unittest.TestCase):
             for direction in [faller.MotorDirectionForward, faller.MotorDirectionBackward]:        
                 faller.start(motor, direction)        
 
+    def test_get_speed_invalid(self):
+        """ Test that the get_speed function is returning an exception if an invalid parameters is given"""
+        faller.init("172.17.217.217")
+        # Here we test that a string is not considered as a valid parameter
+        with self.assertRaises(TypeError):
+            t = faller.get_speed("xxx", 1) 
+        with self.assertRaises(RuntimeError):
+            t = faller.get_speed(123, 20)
+            
+         # Here we test that an out of range crane number rise an exception
+        with self.assertRaises(IndexError):
+            n > len(ip_master_n)
+            
+    def test_start_for_invalid(self):
+        """ Test that the start_for function is returning an exception if an invalid parameters is given"""
+        faller.init("172.17.217.217")
+        # Here we test that an int as time rise an exception
+        with self.assertRaise(ValueError):
+            faller.start_for(5,faller.MotorDirectionForward, 0)
+            
+        # Here we test that an out of turn rise an exception
+        with self.assertRaises(RuntimeError):
+            faller.start_for( 5* ureg.second , faller.MotorCrab, -10, 0)
+           
+        # Here we test that an out of range motor number rise an exception
+        with self.assertRaises(RuntimeError):
+            faller.start_for(5* ureg.microsecond , -6, faller.MotorDirectionForward,0)  
+                  
+               
+        
+        
     def test_startInvalid(self):
         faller.init("172.17.217.217")
         
