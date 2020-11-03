@@ -122,11 +122,11 @@ def set_speed(sNr, speed, n = 0):
     
     current = change_speed(sNr, 0, n) 
     diff = speed - current 
-    return change_speed(sNr, diff , n=0)    
+    return change_speed(sNr, diff, n)    
 
 def get_speed(sNr, n=0):
     """ Returns the current speed for a motor """    		
-    return change_speed(sNr, 0 , n = 0)
+    return change_speed(sNr, 0, n)
 
 
 
