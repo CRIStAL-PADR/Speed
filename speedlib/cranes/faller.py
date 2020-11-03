@@ -69,7 +69,6 @@ def step(sNr,turn,n=0):
 
 def start_for(t, sNr, turn , n = 0):
     """
-    Comment about start_for function
     :param t : This is the time during which we decide to run a motor. The syntax is t * ureg.second
         It is noted that we can also write t * ureg.millisecond in case we decide to run the engine for t millisecond.
      :param sNr : See the start function
@@ -90,7 +89,7 @@ def start_for(t, sNr, turn , n = 0):
    
 
 def start(sNr, turn, n = 0):
-    """ Comments about the start function
+    """ 
         :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
         :param turn: It indicates the direction in which we would like to run the engine. 1 for moving forward and -1 for moving backward.
 
@@ -162,8 +161,7 @@ def change_speed(sNr, diff, n=0):
 
 
 def get_battery(n=0):
-    """Comment about get_battery function
-   
+    """
     This function takes the number of the crane as a parameter and returns a tuple 
     (the battery state associated with the crane: the battery of the master as well as that of the slave)
     """
@@ -202,7 +200,7 @@ def init(ip):
 
     
 def get_other_esp(ip):
-    """ Comments about get_other_esp function
+    """
 	This function has the role of launching a request to obtain the IP address of the slave
     """
     global timeout
