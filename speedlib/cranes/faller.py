@@ -32,8 +32,6 @@ def get_motor_info_from_number(sNr, n = 0):
     
     """
     
-    if n < 0:
-        raise ValueError(" The value of n must be greater than or equal to 0 but got "+str(n))
     
     if not isinstance(n, int):
         raise TypeError("The value of n must be an integer but got  "+str(n))
@@ -116,15 +114,15 @@ def set_speed(sNr, speed, n = 0):
 
     if not isinstance(n, int):
         raise TypeError(" The value of n must be an integer ")
-    if n < 0:
-        raise ValueError(" The value of n must be greater than or equal to 0 but got "+str(n))	
-    
+  
     current = change_speed(sNr, 0, n) 
     diff = speed - current 
     return change_speed(sNr, diff , n)    
 
 def get_speed(sNr, n=0):
-    """ Returns the current speed for a motor """    		
+    """ Returns the current speed for a motor """ 
+     if not isinstance(n, int):
+        raise TypeError(" The value of n must be an integer ")   		
     return change_speed(sNr, 0 , n)
 
 

@@ -77,7 +77,7 @@ class TestCrane(unittest.TestCase):
             
          # Here we test that an out of range crane number rise an exception
         with self.assertRaises(IndexError):
-            n > len(ip_master_n)
+            t = faller.get_speed(faller.MotorCrab, 10)
             
     def test_start_for_invalid(self):
         """ Test that the start_for function is returning an exception if an invalid parameters is given"""
