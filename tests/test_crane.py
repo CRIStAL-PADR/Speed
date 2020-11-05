@@ -43,7 +43,6 @@ class TestCrane(unittest.TestCase):
         # Here we test that a string is not considered as a valid parameter
         with self.assertRaises(TypeError):
             t = faller.change_speed("MotorOne", 10)        
-
         
         with self.assertRaises(RuntimeError):
             t = faller.change_speed(123, 20)        
@@ -51,7 +50,11 @@ class TestCrane(unittest.TestCase):
         # Here we tests that weird values provided as parameter are rejected with an exception
         with self.assertRaises(TypeError):
             for motor in [faller.MotorCrab, faller.MotorChassis, faller.MotorSpreader]:
-                t = faller.change_speed(motor, "20")       
+                t = faller.change_speed(motor, "20")     
+                
+        # Here we test that an out of range crane number rise an exception
+        with self.assertRaises(IndexError):
+            t = faller.change_speed(faller.MotorCrab, 10)
 
     def test_step(self):
         faller.init("172.17.217.217")
@@ -74,8 +77,7 @@ class TestCrane(unittest.TestCase):
             t = faller.get_speed("xxx", 1) 
         with self.assertRaises(RuntimeError):
             t = faller.get_speed(123, 20)
-            
-         # Here we test that an out of range crane number rise an exception
+        # Here we test that an out of range crane number rise an exception
         with self.assertRaises(IndexError):
             t = faller.get_speed(faller.MotorCrab, 10)
             

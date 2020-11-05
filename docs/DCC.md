@@ -37,7 +37,7 @@ Comme logiciel de commande on pourra utiliser:
 	Comme choix de carte moteur nous allons utiliser LMD18200. Cette carte conserve la forme de la tension du signal présent à leur entrée (donc l’information)
 et amplifie le signal de sortie. La forme des impulsions sont conservée afin de conservée les codes transmis.
 
-				La RaspberryPI
+				La RaspberryPI avec l'API _dccpi_
  Elle utilise l'API _dccpi_  qu'on peut installer avec  __pip install dccpi__
 Cette API est capable de sortir  la direction et la vitesse des paquets codés DCC sur l’une des broches GPIO
 
