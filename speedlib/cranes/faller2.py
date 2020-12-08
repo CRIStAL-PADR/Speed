@@ -8,45 +8,43 @@ import asyncio
 from pint import UnitRegistry
 
 timeout = 2.5
+ureg = UnitRegistry()
+MotorSpreader = 1
+MotorCrab = 2
+MotorChassis = 3
+MotorDirectionBackward = 1
+MotorDirectionForward = 2
+t =10*ureg.millisecond
 
-class Faller:
+class Crane:
     
-    def __init__(self):
-        
-        self.ureg = UnitRegistry()
-        self.MotorSpreader = 1
-        self.MotorCrab = 2
-        self.MotorChassis = 3
-        self.MotorDirectionBackward = 1
-        self.MotorDirectionForward = 2
-        
-        
-
 
     def get_motor_info_from_number(self, sNr):
-        
-        
+        """ 
+        It takes the number of the motor and the crane as input and returns the  number of the motor with its IP address.
+        :param : see def start (sNr, turn) parameters
+            
+        """
         
         if not isinstance(sNr, int):
             raise TypeError(" The value of n must be an integer but got " +str(sNr))
-        
     
-    
-        if self.MotorSpreader == sNr:
+        if MotorSpreader == sNr:
             return (self.ip_slave, 1)
-        elif self.MotorCrab == sNr:
+        elif MotorCrab == sNr:
             return (self.ip_slave, 2)
-        elif self.MotorChassis == sNr:
+        elif MotorChassis == sNr:
             return (self.ip_master, 1)
-        
         raise RuntimeError("Invalid motor number, must be MotorSpreader, MotorCrab or MotorChassis, got "+str(sNr))
 
     def start (self, sNr, turn):
-    
+        """ 
+        :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
+        :param turn: It indicates the direction in which we would like to run the engine. 1 for moving forward and -1 for moving backward.
 
-      
-           
-        if turn not in [self.MotorDirectionForward, self.MotorDirectionBackward]:
+
+        """
+        if turn not in [MotorDirectionForward, MotorDirectionBackward]:
             raise RuntimeError("Invalid parameter, turn must be either MotorDirectionForward or MotorDirectionBackward. Got " +str(turn))			
     
         ip, numMotor = self.get_motor_info_from_number(sNr)
@@ -59,13 +57,25 @@ class Faller:
             raise RuntimeError("Able to controle the motor but got not OK answer: "+r.text)
         return r.text
         
-    def step (self, sNr, turn):
+    
         
+    def step (self, sNr, turn):
+        """ 
+        :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
+        :param turn: It indicates the direction in which we would like to run the engine. 1 for moving forward and -1 for moving backward.
+
+        Example:
+        start(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
+        """
         return self.start(sNr, turn)
   
-    def get_battery(self):
+    def _battery(self):
+        """
+        This function takes the number of the crane as a parameter and returns a tuple 
+        (the battery state associated with the crane: the battery of the master as well as that of the slave)
+        """
     
-        timeout
+        global timeout
 
         r1=requests.get("http://"+self.ip_master+"/getBat?n=1", timeout=timeout)
         r2=requests.get("http://"+self.ip_slave+"/getBat?n=2", timeout=timeout)
@@ -77,10 +87,23 @@ class Faller:
             raise RuntimeError("Please check if the r2 battery is correctly powered")
     
         return (int(r1.text), int(r2.text))
+        
+    def _get_battery (self):
+        print("Attention on n'essaie d'avoir les info sur la batterie")
+        return self._battery
+    battery = property(_get_battery)
 
     def change_speed(self, sNr, diff):
- 
-        timeout 
+        """
+        This function allows us to modify the engine speed while varying its cyclic ratio. 
+        :param sNr:  see def start (sNr, turn, n = 0) parameters
+        :param diff: This parameter is used to vary the speed of the motor. Il s'agit d'un entier.
+        It should be noted that the maximum speed that the motor can reach is 100 and the motor speed cannot drop below 30
+	   :n : Il is the number of the crane
+        Example:
+		change_speed( MotorSpreader, -60, 2 ) : allows to decrease the motorspeed 3 by 60
+        """
+        global timeout 
 		
     
         if not isinstance (diff, int):
@@ -96,15 +119,24 @@ class Faller:
         num = int(result.groups()[0])
         return num
 
+    def get_speed(self , sNr):
+        """ Returns the current speed for a motor """ 
+        return self.change_speed( sNr, 0)
+    
 
     def init (self, ip):
+        """ 
+        The purpose of this function is to initialize the IP address of the master and once the IP address of the master is
+        initialized to obtain that of the slave thanks to the getOtherEsp function   
+        """
+        global ip_master, ip_slave
         self.ip_master = ip
         self.ip_slave = self.get_other_esp(ip) 
-    
- 
 
     def get_other_esp(self, ip):
-   
+        """
+        This function has the role of launching a request to obtain the IP address of the slave
+        """
         global timeout
         r = requests.get("http://" + ip + "/getOtherEsp", timeout = timeout)
         if r.status_code != 200:
@@ -121,15 +153,20 @@ if __name__ == "__main__":
    
     ip_1 = "172.17.217.217"
     ip_2 = "172.17.217.217"
+   
+    crane_1 = Crane()
+    crane_2 = Crane()
     
-    crane_1 = Faller()
     crane_1.init(ip_1)
-    print(crane_1.get_battery())
-    print(crane_1.change_speed(crane_1.MotorChassis,-50))
-    
-    crane_2 = Faller()
     crane_2.init(ip_2)
-    print(crane_2.get_battery())
-    print(crane_1.change_speed(crane_2.MotorCrab,-20))
-    crane_2.step(crane_2.MotorChassis , crane_2.MotorDirectionBackward)
-    crane_1.step(crane_1.MotorCrab, crane_1.MotorDirectionBackward)
+    
+    #print(crane_1.battery())
+    print(crane_1.change_speed(MotorCrab, 40))
+    
+    #print(crane_2.battery())
+    #print(crane_2.change_speed(MotorSpreader,20))
+    
+    #crane_2.step(MotorChassis ,MotorDirectionBackward)
+    #crane_1.step(MotorCrab, MotorDirectionBackward)
+    
+    print (crane_1.get_speed(MotorCrab))
