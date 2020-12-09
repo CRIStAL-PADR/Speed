@@ -14,14 +14,14 @@ MotorCrab = 2
 MotorChassis = 3
 MotorDirectionBackward = 1
 MotorDirectionForward = 2
-t =10*ureg.millisecond
+
 
 class Crane:
     
 
     def get_motor_info_from_number(self, sNr):
         """ 
-        It takes the number of the motor and the crane as input and returns the  number of the motor with its IP address.
+        It takes the crane as input and returns the  number of the motor with its IP address.
         :param : see def start (sNr, turn) parameters
             
         """
@@ -57,7 +57,6 @@ class Crane:
             raise RuntimeError("Able to controle the motor but got not OK answer: "+r.text)
         return r.text
         
-    
         
     def step (self, sNr, turn):
         """ 
@@ -65,14 +64,36 @@ class Crane:
         :param turn: It indicates the direction in which we would like to run the engine. 1 for moving forward and -1 for moving backward.
 
         Example:
-        start(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
+        step(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
         """
         return self.start(sNr, turn)
   
+            
+    def start_for(self, t, sNr, turn ):
+        
+        """:param t : This is the time during which we decide to run a motor. The syntax is t * ureg.second
+        It is noted that we can also write t * ureg.millisecond in case we decide to run the engine for t millisecond.
+        :param sNr : See the start function
+        :param turn :See the start function
+     
+        example
+        start_for(5000*ureg.nanosecond,MotorChassis,MotorDirectionForward)
+        Here we decide to rotate the Chassis forward for 5000 nanosecond
+        """
+    
+        if t < 0:
+            raise ValueError("t must be greater than 0 but got "+str(t))
+   
+        init_time = time.time()*ureg.second
+        while time.time()*ureg.second - init_time < t:
+            self.step(sNr, turn)
+    
+
+        
+
     def _battery(self):
         """
-        This function takes the number of the crane as a parameter and returns a tuple 
-        (the battery state associated with the crane: the battery of the master as well as that of the slave)
+        This function returns the battery state : the state of the master's battery as well as that of the slave
         """
     
         global timeout
@@ -88,20 +109,17 @@ class Crane:
     
         return (int(r1.text), int(r2.text))
         
-    def _get_battery (self):
-        print("Attention on n'essaie d'avoir les info sur la batterie")
-        return self._battery
-    battery = property(_get_battery)
+  
+    battery = property(_battery)
 
     def change_speed(self, sNr, diff):
         """
         This function allows us to modify the engine speed while varying its cyclic ratio. 
-        :param sNr:  see def start (sNr, turn, n = 0) parameters
+        :param sNr:  see def start (sNr, turn) parameters
         :param diff: This parameter is used to vary the speed of the motor. Il s'agit d'un entier.
         It should be noted that the maximum speed that the motor can reach is 100 and the motor speed cannot drop below 30
-	   :n : Il is the number of the crane
         Example:
-		change_speed( MotorSpreader, -60, 2 ) : allows to decrease the motorspeed 3 by 60
+		change_speed( MotorSpreader, -60 ) : allows to decrease the motorspeed 3 by 60
         """
         global timeout 
 		
@@ -121,8 +139,15 @@ class Crane:
 
     def get_speed(self , sNr):
         """ Returns the current speed for a motor """ 
-        return self.change_speed( sNr, 0)
-    
+        
+        return self.change_speed(sNr, 0)
+        
+    def set_speed(self , sNr, speed):
+        
+        """ set the speed for a motor """    	
+        current = self.change_speed(sNr, 0) 
+        diff = speed - current 
+        return self.change_speed(sNr, diff)
 
     def init (self, ip):
         """ 
@@ -160,13 +185,16 @@ if __name__ == "__main__":
     crane_1.init(ip_1)
     crane_2.init(ip_2)
     
-    #print(crane_1.battery())
+    print(crane_1.battery)
     print(crane_1.change_speed(MotorCrab, 40))
     
-    #print(crane_2.battery())
-    #print(crane_2.change_speed(MotorSpreader,20))
+    print(crane_2.battery())
+    print(crane_2.change_speed(MotorSpreader,20))
     
-    #crane_2.step(MotorChassis ,MotorDirectionBackward)
-    #crane_1.step(MotorCrab, MotorDirectionBackward)
+    crane_2.step(MotorChassis ,MotorDirectionBackward)
+    crane_1.step(MotorCrab, MotorDirectionBackward)
     
     print (crane_1.get_speed(MotorCrab))
+    crane_2.start_for(5000*ureg.millisecond,MotorChassis,MotorDirectionForward)
+    
+    print (crane_1.set_speed(MotorCrab , +20))
