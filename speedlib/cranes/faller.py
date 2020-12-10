@@ -121,7 +121,7 @@ def set_speed(sNr, speed, n = 0):
 
 def get_speed(sNr, n=0):
     """ Returns the current speed for a motor """ 
-     if not isinstance(n, int):
+    if not isinstance(n, int):
         raise TypeError(" The value of n must be an integer ")   		
     return change_speed(sNr, 0 , n)
 
@@ -216,6 +216,6 @@ if __name__ == "__main__":
     init(ip)
     start_for(50000000*ureg.nanosecond,MotorChassis,MotorDirectionForward)
     
-    print(set_speed(MotorSpreader, 10, 1))
-    print(change_speed(MotorSpreader, 2))
+    #print(set_speed(MotorSpreader, 10, 1))
+    #print(change_speed(MotorSpreader, 2))
 
