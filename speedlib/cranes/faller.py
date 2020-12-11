@@ -80,6 +80,8 @@ class Crane:
         start_for(5000*ureg.nanosecond,MotorChassis,MotorDirectionForward)
         Here we decide to rotate the Chassis forward for 5000 nanosecond
         """
+        if sNr not in [MotorChassis, MotorSpreader, MotorCrab]:
+            raise RuntimeError("Invalid parameter, sNr must be either MotorChassis or MotorSpreader or MotorCrab . Got " +str(sNr))
     
         if t < 0:
             raise ValueError("t must be greater than 0 but got "+str(t))
@@ -91,7 +93,7 @@ class Crane:
 
         
 
-    def _battery(self):
+    def _get_battery(self):
         """
         This function returns the battery state : the state of the master's battery as well as that of the slave
         """
@@ -110,7 +112,7 @@ class Crane:
         return (int(r1.text), int(r2.text))
         
   
-    battery = property(_battery)
+    battery = property(_get_battery)
 
     def change_speed(self, sNr, diff):
         """
@@ -175,7 +177,7 @@ class Crane:
 
 if __name__ == "__main__":
     
-   
+
     ip_1 = "172.17.217.217"
     ip_2 = "172.17.217.217"
    
@@ -198,3 +200,4 @@ if __name__ == "__main__":
     crane_2.start_for(5000*ureg.millisecond,MotorChassis,MotorDirectionForward)
     
     print (crane_1.set_speed(MotorCrab , +20))
+
