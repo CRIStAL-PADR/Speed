@@ -12,8 +12,8 @@ ureg = UnitRegistry()
 ip_master_n = []
 ip_slave_n = []
 
-MotorSpreader = 1
-MotorCrab = 2
+MotorSpreader = 2
+MotorCrab = 1
 MotorChassis = 3
 
 MotorDirectionForward = 1
@@ -63,6 +63,7 @@ def step(sNr,turn,n=0):
         start(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
     """
     start(sNr, turn, n)
+    stop(sNr,n)
 
 
 def start_for(t, sNr, turn , n = 0):
@@ -95,6 +96,8 @@ def start(sNr, turn, n = 0):
     """
     global timeout
            
+    print("start")         
+           
     if turn not in [MotorDirectionForward, MotorDirectionBackward]:
         raise RuntimeError("Invalid parameter, turn must be either MotorDirectionForward or MotorDirectionBackward. Got " +str(turn))			
     
@@ -107,7 +110,27 @@ def start(sNr, turn, n = 0):
     if r.text != "ok":
         raise RuntimeError("Able to controle the motor but got not OK answer: "+r.text)
     return r.text
-        
+    
+  
+  
+def stop(sNr, n=0):
+    """ 
+        :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
+
+
+    """
+    global timeout
+           
+    ip, numMotor = get_motor_info_from_number( sNr, n)
+    r = requests.get("http://"+ip+"/stopM?sNr="+str(numMotor),timeout=timeout)
+ 
+    if r.status_code !=200:
+        raise RuntimeError("Unable to control the motor, "+str(r.status_code))
+
+    if r.text != "ok":
+        raise RuntimeError("Able to controle the motor but got not OK answer: "+r.text)
+    return r.text  
+  
         
 def set_speed(sNr, speed, n = 0):
     """ set the speed for a motor """    	
@@ -119,40 +142,35 @@ def set_speed(sNr, speed, n = 0):
     diff = speed - current 
     return change_speed(sNr, diff , n)    
 
-def get_speed(sNr, n=0):
-    """ Returns the current speed for a motor """ 
-    if not isinstance(n, int):
-        raise TypeError(" The value of n must be an integer ")   		
-    return change_speed(sNr, 0 , n)
+
 
 
 
 def change_speed(sNr, diff, n=0):
-    """
-    This function allows us to modify the engine speed while varying its cyclic ratio. 
+	"""
+	This function allows us to modify the engine speed while varying its cyclic ratio. 
 	
-       :param sNr:  see def start (sNr, turn, n = 0) parameters
-       :param diff: This parameter is used to vary the speed of the motor. Il s'agit d'un entier.
-       It should be noted that the maximum speed that the motor can reach is 100 and the motor speed cannot drop below 30
-	   :n : Il is the number of the crane
-    Example:
+		:param sNr:  see def start (sNr, turn, n = 0) parameters
+	:param diff: This parameter is used to vary the speed of the motor. Il s'agit d'un entier.
+		It should be noted that the maximum speed that the motor can reach is 100 and the motor speed cannot drop below 30
+		:n : Il is the number of the crane
+	Example:
 		change_speed( MotorSpreader, -60, 2 ) : allows to decrease the motorspeed 3 by 60
-     """
-    global ip_master, ip_slave, timeout
+	"""
+	global ip_master, ip_slave, timeout
 		
-    
-    if not isinstance (diff, int):
-        raise TypeError()
-        
-    ip, numMotor = get_motor_info_from_number(sNr, n)
-    r = requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff), timeout=timeout)
-    
-    if r.status_code != 200: 
-        raise RuntimeError("Unable to change the speed of the motor,"+str(r.status_code))
-    
-    result = re.search("neuer Speed=\s+(\d+)", r.text)
-    num = int(result.groups()[0])
-    return num
+	
+	if not isinstance (diff, int):
+		raise TypeError()
+	ip, numMotor = get_motor_info_from_number(sNr, n)
+	r = requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff), timeout=timeout)
+	
+	if r.status_code != 200: 
+		raise RuntimeError("Unable to change the speed of the motor,"+str(r.status_code))
+	
+	result = re.search("neuer Speed=\s+(\d+)", r.text)
+	num = int(result.groups()[0])
+	return num
 
 
 
@@ -216,6 +234,6 @@ if __name__ == "__main__":
     init(ip)
     start_for(50000000*ureg.nanosecond,MotorChassis,MotorDirectionForward)
     
-    #print(set_speed(MotorSpreader, 10, 1))
-    #print(change_speed(MotorSpreader, 2))
+    """print(set_speed(MotorSpreader, 10, 1))
+    print(change_speed(MotorSpreader, 2))"""
 
