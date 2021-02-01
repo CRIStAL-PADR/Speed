@@ -70,6 +70,12 @@ class TestCrane(unittest.TestCase):
         for motor in [faller.MotorCrab, faller.MotorChassis, faller.MotorSpreader]:
             for direction in [faller.MotorDirectionForward, faller.MotorDirectionForward]:        
                 crane.start(motor, direction)
+                
+    def test_stop(self):
+        """ test that the stop function works when given the right ones settings""" 
+        crane.init("172.17.217.217")
+        for motor in [faller.MotorCrab, faller.MotorChassis, faller.MotorSpreader]:
+                crane.stop(motor)
                  
     def test_get_speed_invalid(self):
         """ Test that the get_speed function is returning an exception if an invalid parameters is given"""
