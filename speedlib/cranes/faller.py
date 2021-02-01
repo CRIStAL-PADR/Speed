@@ -9,8 +9,8 @@ from pint import UnitRegistry
 
 timeout = 2.5
 ureg = UnitRegistry()
-MotorSpreader = 1
-MotorCrab = 2
+MotorSpreader = 2
+MotorCrab = 1
 MotorChassis = 3
 MotorDirectionBackward = 1
 MotorDirectionForward = 2
@@ -49,7 +49,22 @@ class Crane:
     
         ip, numMotor = self.get_motor_info_from_number(sNr)
         r = requests.get("http://"+ip+"/startM?sNr="+str(numMotor)+"&turn="+str(turn),timeout=timeout)
- 
+        
+        if r.status_code !=200:
+            raise RuntimeError("Unable to control the motor, "+str(r.status_code))
+
+        if r.text != "ok":
+            raise RuntimeError("Able to controle the motor but got not OK answer: "+r.text)
+        return r.text
+        
+    def stop(self, sNr):
+        """
+        :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
+
+        """
+        global timeout
+        ip, numMotor = self.get_motor_info_from_number(sNr)
+        r = requests.get("http://"+ip+"/stopM?sNr="+str(numMotor),timeout=timeout)
         if r.status_code !=200:
             raise RuntimeError("Unable to control the motor, "+str(r.status_code))
 
@@ -66,7 +81,7 @@ class Crane:
         Example:
         step(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
         """
-        return self.start(sNr, turn)
+        return (self.start(sNr, turn), self.stop(sNr))
   
             
     def start_for(self, t, sNr, turn ):
@@ -87,9 +102,11 @@ class Crane:
             raise ValueError("t must be greater than 0 but got "+str(t))
    
         init_time = time.time()*ureg.second
+        print("start")
         while time.time()*ureg.second - init_time < t:
-            self.step(sNr, turn)
-    
+            self.start(sNr, turn)
+        self.stop(sNr)
+        print("stop")
 
         
 
@@ -177,7 +194,7 @@ class Crane:
 
 if __name__ == "__main__":
     
-
+  
     ip_1 = "172.17.217.217"
     ip_2 = "172.17.217.217"
    
@@ -186,18 +203,15 @@ if __name__ == "__main__":
     
     crane_1.init(ip_1)
     crane_2.init(ip_2)
-    
+
     print(crane_1.battery)
     print(crane_1.change_speed(MotorCrab, 40))
-    
-    print(crane_2.battery())
+
     print(crane_2.change_speed(MotorSpreader,20))
-    
+    print(crane_2.battery)
     crane_2.step(MotorChassis ,MotorDirectionBackward)
     crane_1.step(MotorCrab, MotorDirectionBackward)
-    
     print (crane_1.get_speed(MotorCrab))
-    crane_2.start_for(5000*ureg.millisecond,MotorChassis,MotorDirectionForward)
+    crane_2.start_for(1*ureg.second,MotorSpreader,MotorDirectionBackward)
     
     print (crane_1.set_speed(MotorCrab , +20))
-
