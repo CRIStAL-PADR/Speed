@@ -33,6 +33,6 @@ newspeed=faller.set_speed(faller.MotorCrab, speed=50)
 print(newspeed)
 
 # To change the configured speed for a motor you can also provide a speed difference to the change_speed function.
-# the value returned is the new speed. 
+# the value returned is the new speed. 
 newspeed = faller.change_speed(faller.MotorChassis, diff=5)
 print(newspeed)
