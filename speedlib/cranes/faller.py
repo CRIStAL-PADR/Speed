@@ -127,8 +127,7 @@ class Crane:
             raise RuntimeError("Please check if the r2 battery is correctly powered")
     
         return (int(r1.text), int(r2.text))
-        
-  
+
     battery = property(_get_battery)
 
     def change_speed(self, sNr, diff):
@@ -141,7 +140,6 @@ class Crane:
 		change_speed( MotorSpreader, -60 ) : allows to decrease the motorspeed 3 by 60
         """
         global timeout 
-		
     
         if not isinstance (diff, int):
             raise TypeError()
@@ -213,5 +211,4 @@ if __name__ == "__main__":
     crane_1.step(MotorCrab, MotorDirectionBackward)
     print (crane_1.get_speed(MotorCrab))
     crane_2.start_for(1*ureg.second,MotorSpreader,MotorDirectionBackward)
-    
-    print (crane_1.set_speed(MotorCrab , +20))
+
