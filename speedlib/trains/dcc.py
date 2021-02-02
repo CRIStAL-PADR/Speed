@@ -17,6 +17,7 @@ class Train:
         self.l = DCCLocomotive(name,adress)
         self.adress = adress
         controller.register(self.l)
+        self._speed = 0
             
     def reverse(self):
         """Change the direction"""
@@ -30,10 +31,12 @@ class Train:
         """Reduce the speed"""
         self.l.slower()
         
-    def speed(self,s):
+    def _set_speed(self,new_speed):
         """This function allow us to change the speed"""
-        self.l.speed = s
+        self.l.speed = new_speed
         
+    speed = property(_set_speed)
+            
     def fl(self,x):
         self.l.fl = x
         
