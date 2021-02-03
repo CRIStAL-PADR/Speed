@@ -27,6 +27,10 @@ class Train:
         """ Emergency stop. stop controller always"""
         self.l.stop()
         
+    def faster():
+        """ Increase 1 speed step"""
+        self.l.faster()
+        
     def slower(self):
         """Reduce the speed"""
         self.l.slower()

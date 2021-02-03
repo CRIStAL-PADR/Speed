@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="speedlib-dedo-fabrice",
-    version="1.2",
+    version="2.0",
     author="Fabrice Dedo & Damien Marchal",
     author_email="komla-sam-fabrice.dedo@polytech-lille.net",
     description="A python library to operate 'Speed' devices",
