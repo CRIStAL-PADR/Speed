@@ -50,4 +50,4 @@ Cette API est capable de sortir  la direction et la vitesse des paquets codés D
 
 	 
 Lien qui peut ếtre utile pour comprendre comment les informations sont décodées
-[Train_moniature](http://stephane.ravaut.free.fr/Train_miniature/LE_DCC/Le_DCC_Comment_ca_marche.html)
+[Train_miniature](http://stephane.ravaut.free.fr/Train_miniature/LE_DCC/Le_DCC_Comment_ca_marche.html)
