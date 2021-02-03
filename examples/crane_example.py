@@ -4,7 +4,6 @@
 """
 from speedlib.cranes import faller
 from speedlib.cranes.faller import Crane
-import time
 
 # Initialization of the board using its ip address.
 # In case of error exception are risen. 

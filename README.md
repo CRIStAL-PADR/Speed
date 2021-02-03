@@ -7,9 +7,15 @@ Example
 -------
 ```python
 from speedlib.cranes import faller
-faller.init("172.17.217.217")
-faller.set_speed(faller.MotorChassis, 50)
-faller.step(faller.MotorChassis, faller.MotorDirectionBackward)
+from speedlib.cranes.faller import Crane
+ip_1 = "172.17.217.217"
+ip_2 = "172.17.217.217"
+crane_1 = Crane()
+crane_2 = Crane()
+crane_1.init(ip_1)
+crane_2.init(ip_2)
+crane_2.start_for(20*faller.ureg.millisecond,faller.MotorChassis,faller.MotorDirectionForward)
+crane_1.change_speed(faller.MotorCrab, -40)
 ```
 You can find more examples in the *examples* directory.
 
