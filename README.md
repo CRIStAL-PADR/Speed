@@ -26,7 +26,7 @@ train1.l.speed = 14
 train1.faster()
 train1.slower()
 train1.l.fl = True 
-train1.stop()
+dcc.stop()
 ```
 You can find more examples in the *examples* directory.
 
