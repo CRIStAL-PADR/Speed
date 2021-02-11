@@ -26,14 +26,15 @@ class Train:
         self.l = DCCLocomotive(name,adress)
         controller.register(self.l)
         self._speed = 0
+        self._fl = False
+        self._f1 = False
+        self._f2 = False
+        self._f3 = False
+        self._f4 = False
             
     def reverse(self):
         """Change the direction"""
         self.l.reverse()  
-     
-    def stop(self):
-        """ Emergency stop. stop controller always"""
-        self.l.stop()
         
     def faster(self):
         """ Increase 1 speed step"""
@@ -48,20 +49,34 @@ class Train:
         if not isinstance(new_speed, int):
             raise TypeError("vew_speed must be an integer but get "+ str(new_speed))
         self.l.speed = new_speed
-        
     speed = property(_set_speed)
             
-    def fl(self,x):
-        self.l.fl = x
-        
-    def f1(self,x):
-        self.l.f1 = x
-        
-    def f2(self,x):
-        self.l.f2 = x
-        
-    def f3(self,x):
-        self.l.f3 = x
+    def _set_fl(self,x):
+        if x not in [False, True]:
+            raise TypeError("x must be a bool but got "+str(x))
+        self.l._fl = x
+    fl = property(_set_fl)
     
-    def f4(self,x):
-        self.l.f4 = x
+    def _set_f1(self,x):
+        if not isinstance(x, bool):
+            raise TypeError("x must be a bool but got "+str(x))
+        self.l._f1 = x
+    f1 = property(_set_f1)
+    
+    def _set_f2(self,x):
+        if not isinstance(x, bool):
+            raise TypeError("x must be a bool but got "+str(x))
+        self.l._f2 = x
+    f2 = property(_set_f2)
+    
+    def _set_f3(self,x):
+        if not isinstance(x, bool):
+            raise TypeError("x must be a bool but got "+str(x))
+        self.l._f3 = x
+    f3 = property(_set_f3)
+    
+    def _set_f4(self,x):
+        if not isinstance(x, bool):
+            raise TypeError("x must be a bool but got "+str(x))
+        self.l._f4 = x
+    f4 = property(_set_f4)
