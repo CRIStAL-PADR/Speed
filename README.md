@@ -1,12 +1,12 @@
 # SpeedLib
 A python library to operate Speed devices.
 
-Currently only the Faller (c) 180290 models is supported. 
+Currently the API has an unique backend allowing to control miniature devices like the Faller (c) Crane or DCC trains. 
 
-Example
--------
+Examples
+--------
+Controlling a Faller (c) crane model
 ```python
- EXAMPLE_1 (crane_example)
 from speedlib.cranes import faller
 from speedlib.cranes.faller import Crane
 ip_1 = "172.17.217.217"
@@ -17,8 +17,10 @@ crane_1.init(ip_1)
 crane_2.init(ip_2)
 crane_2.start_for(20*faller.ureg.millisecond,faller.MotorChassis,faller.MotorDirectionForward)
 crane_1.change_speed(faller.MotorCrab, -40)
- 
- EXAMPLE_2(train_example)
+```
+
+Controlling a DCC train model
+```python
 from speedlib.trains import dcc
 from speedlib.trains.dcc import Train
 dcc.start()
