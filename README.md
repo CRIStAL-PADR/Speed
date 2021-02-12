@@ -24,10 +24,10 @@ Controlling a DCC train model
 from speedlib.trains import dcc
 from speedlib.trains.dcc import Train
 dcc.start()
-train1.l.speed = 14
+train1.speed = 14
 train1.faster()
 train1.slower()
-train1.l.fl = True 
+train1.fl = True 
 dcc.stop()
 ```
 You can find more examples in the *examples* directory.
