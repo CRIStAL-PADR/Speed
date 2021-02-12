@@ -1,48 +1,51 @@
-DCC
+﻿DCC
 ===
 
-**DCC** ( *système de commande numérique* ) est un standard utilisé  dans le modélisme ferroviaire pour commander individuellement des locomotives ou des accessoires de voie en modulant 
-la tension d’alimentation de la voie.
+**DCC** ( *digital control system* ) is a standard used in model railroading to control individual locomotives or track accessories by modulating 
+the supply voltage of the track.
 
-Les locomotives et leurs accessoires ( feux , effets ) ainsi que les accessoires du réseau possèdent chacune une adresse unique. 
-Le signal  codé envoyé sur la voie donne des ordes aux équipements tout en fournissant la puissance.
+The locomotives and their accessories (lights, effects) as well as the network accessories each have a unique address. 
+The coded signal sent on the track gives commands to the equipment while providing power.
 
-Principe de fonctionnement
-==========================
+Principle
+=========
                                                     
-        
-Le rôle du standard **DCC** est de générer un signal électrique en binaire pour envoyer  des informations à des locomotives ou des accessoires. 
-Une suite de 0 et de 1 qui sont  traduits électriquement par des alternances positives et négatives longues (100us) pour  les 0 et courtes (58us) pour les 1. 
-Les terminaux sur le circuit (Locomotives et accessoires ) sont équipés de décodeurs qui vont traduire ces messages  binaires en commandes .
+        The role of the **DCC** standard is to generate an electrical signal in binary to send information to locomotives or accessories. 
+A sequence of 0 and 1 which are electrically translated by long positive and negative alternations (100us) for the 0 and short (58us) for the 1. 
+The terminals on the circuit (locomotives and accessories) are equipped with decoders that translate these binary messages into commands.
 		
-Équipements                                   
+Équipments                                   
 ===========
-* Une centrale de commande constitué de carte électronique et d'une carte moteur dont l'objectif est de moduler la tension de la voie
-* Les équipements mobiles (locomotives ) ou fixes (feux éclairages) qui sont dotés de décodeurs permettant d’interpréter les signaux de commande.
+* A control unit consisting of an electronic board and a motor board whose purpose is to modulate the track voltage.
+* Mobile (locomotives ) or fixed equipment (lights) that are equipped with decoders to interpret control signals.
 
-### La centrale de commande
+### The control center
 
         
-Elle peut être soit manuelle  soit automatisée.
-Pour l’automatisation il y a des logiciels de commande disponibles sous linux.
-Comme logiciel de commande on pourra utiliser:
- * un microcontroleur Atmega 328 /2560
- * un Arduino Uno / Mega
+It can be either manual or automated.
+For automation there are control software available under linux.
+As control software we can use:
+ * an Atmega 328 /2560 microcontroller.
+ * an Arduino Uno / Mega
  * RaspberryPI 
+ 
+There are APIs on github that allow us to use one of the maps if on it.
+    It is also noted that the Arduino and Atmega use open source DCC++ [locoduino ](https://www.locoduino.org/spip.php?article182) while the raspberryPI uses 
+    a python API [dccpi](https://github.com/hsanjuan/dccpi) 
 
-    Il existe des API sur github qui nous permet d'utiliser l'une des cartes si dessus.
-    Il est a noté également que l'Arduino et l'Atmega utilisent un logiciel libre DCC++ [locoduino ](https://www.locoduino.org/spip.php?article182) tandisque la raspberryPI utilise 
-    un API python [dccpi](https://github.com/hsanjuan/dccpi) 
 
-### La carte moteur ( le booster)
+The motor board (the booster)
+=============================
 
-    Le choix d'utiliser une carte moteur est motivé par le fait que les cartes Arduino ou RaspberryPi ne sont pas capable de fournir assez de puissance.
-    Or le principe du standart DCC est de faire circuler une information « de commande » dans le circuit de puissance ( les rails) d’où l’importance d’avoir une carte moteur.
-	Comme choix de carte moteur nous allons utiliser LMD18200. Cette carte conserve la forme de la tension du signal présent à leur entrée (donc l’information) et amplifie le signal de sortie. La forme des impulsions sont conservée afin de conservée les codes transmis.
+ The choice to use an engine card is motivated by the fact that Arduino or RaspberryPi cards are not able to provide enough power.
+    However, the principle of the DCC standard is to circulate "control" information in the power circuit (the rails), hence the importance of having a engine board.
+    As a choice of motor board we will use LMD18200. T
+    his board keeps the shape of the voltage of the signal present at their input (so the information) and amplifies the output signal. 
+    The shape of the impulses is kept in order to keep the transmitted codes.
 
-La RaspberryPI avec l'API dccpi
+The RaspberryPI with dccpi API
 ===============================
- Elle utilise l'API _dccpi_  qu'on peut installer avec `sudo pip install dccpi`
+It uses the API _dccpi_ that can be installed with  `sudo pip install dccpi`
  
 This module implements the DCC protocol for controlling model trains using a Raspberry Pi.
 It is able to output direction and speed DCC-encoded packets on one of the GPIO pins.
@@ -54,9 +57,15 @@ Hardware requirements
 * Booster (LMD 18200)
 * Note dccpi does not yet implement any advanced features like decoder registry operations (i.e. set address), you must ensure the decoder address before implementing it otherwise you risk registering the loco on the wrong address
 
-
+BOOSTER_TYPON
+=============
 	 
-Lien qui peut ếtre utile pour comprendre comment les informations sont décodées
+![Booster schematics](RASBOOSTER.jpg)
+
+![Booster_typon schematics](typon_modifie.jpg)
+
+Link that may be useful to understand how the information is decoded
+
 [Train_miniature](http://stephane.ravaut.free.fr/Train_miniature/LE_DCC/Le_DCC_Comment_ca_marche.html)
 
 
