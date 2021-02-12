@@ -25,6 +25,7 @@ class Train:
         self.adress = adress
         self._l = DCCLocomotive(name,adress)
         controller.register(self._l)
+        self.speed = 0
         self.fl = False
         self.f1 = False
         self.f2 = False
@@ -46,12 +47,12 @@ class Train:
     def _get_speed(self):
         return self._l.speed
     
-    def speed(self,new_speed):
+    def _set_speed(self,new_speed):
         """This function allow us to change the speed"""
         if not isinstance(new_speed, int):
             raise TypeError("vew_speed must be an integer but get "+ str(new_speed))
-        self._l.speed = l.new_speed
-   
+        self._l.speed = new_speed
+    speed = property(_get_speed, _set_speed)
      
     def _get_fl(self):
         return self._l.fl
@@ -63,7 +64,7 @@ class Train:
     fl = property(_get_fl ,_set_fl)
     
     def _get_f1(self):
-        return self.l.f1
+        return self._l.f1
         
     def _set_f1(self,x):
         if not isinstance(x, bool):
@@ -72,7 +73,7 @@ class Train:
     f1 = property(_get_f1,_set_f1)
     
     def _get_f2(self):
-        return self.l.f2
+        return self._l.f2
         
     def _set_f2(self,x):
         if not isinstance(x, bool):
@@ -81,7 +82,7 @@ class Train:
     f2 = property(_get_f2,_set_f2)
 
     def _get_f3(self):
-        return self.l.f3
+        return self._l.f3
         
     def _set_f3(self,x):
         if not isinstance(x, bool):
@@ -90,7 +91,7 @@ class Train:
     f3 = property(_get_f3, _set_f3)
 
     def _get_f4(self):
-        return self.l.f4
+        return self._l.f4
         
     def _set_f4(self,x):
         if not isinstance(x, bool):

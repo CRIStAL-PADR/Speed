@@ -17,8 +17,8 @@ Les terminaux sur le circuit (Locomotives et accessoires ) sont équipés de dé
 		
 Équipements                                   
 ===========
-- Une centrale de commande constitué de carte électronique et d'une carte moteur dont l'objectif est de moduler la tension de la voie
-- Les équipements mobiles (locomotives ) ou fixes (feux éclairages) qui sont dotés de décodeurs permettant d’interpréter les signaux de commande.
+* Une centrale de commande constitué de carte électronique et d'une carte moteur dont l'objectif est de moduler la tension de la voie
+* Les équipements mobiles (locomotives ) ou fixes (feux éclairages) qui sont dotés de décodeurs permettant d’interpréter les signaux de commande.
 
 ### La centrale de commande
 
@@ -43,9 +43,20 @@ Comme logiciel de commande on pourra utiliser:
 La RaspberryPI avec l'API dccpi
 ===============================
  Elle utilise l'API _dccpi_  qu'on peut installer avec `sudo pip install dccpi`
-Cette API est capable de sortir  la direction et la vitesse des paquets codés DCC sur l’une des broches GPIO
+ 
+This module implements the DCC protocol for controlling model trains using a Raspberry Pi.
+It is able to output direction and speed DCC-encoded packets on one of the GPIO pins.
+
+Hardware requirements
+=====================
+* A Raspberry Pi (developed/tested on model B+)
+* DCC-decoder-equipped locomotives and tracks. (see the image below)
+* Booster (LMD 18200)
+* Note dccpi does not yet implement any advanced features like decoder registry operations (i.e. set address), you must ensure the decoder address before implementing it otherwise you risk registering the loco on the wrong address
 
 
 	 
 Lien qui peut ếtre utile pour comprendre comment les informations sont décodées
 [Train_miniature](http://stephane.ravaut.free.fr/Train_miniature/LE_DCC/Le_DCC_Comment_ca_marche.html)
+
+
