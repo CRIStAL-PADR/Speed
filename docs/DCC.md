@@ -58,9 +58,9 @@ Hardware requirements
 BOOSTER_TYPON
 =============
 	 
-![Booster schematics](RASBOOSTER.pdf)
+![Booster schematics](RASBOOSTER.jpg)
 
-![Booster_typon schematics](typon_modifie.pdf)
+![Booster_typon schematics](typon_modifie.jpg)
 
 Lien qui peut ếtre utile pour comprendre comment les informations sont décodées
 [Train_miniature](http://stephane.ravaut.free.fr/Train_miniature/LE_DCC/Le_DCC_Comment_ca_marche.html)
