@@ -23,60 +23,77 @@ class Train:
         
         self.name = name   
         self.adress = adress
-        self.l = DCCLocomotive(name,adress)
-        controller.register(self.l)
-        self._speed = 0
-        self._fl = False
-        self._f1 = False
-        self._f2 = False
-        self._f3 = False
-        self._f4 = False
+        self._l = DCCLocomotive(name,adress)
+        controller.register(self._l)
+        self.fl = False
+        self.f1 = False
+        self.f2 = False
+        self.f3 = False
+        self.f4 = False
             
     def reverse(self):
         """Change the direction"""
-        self.l.reverse()  
+        self._l.reverse()  
         
     def faster(self):
         """ Increase 1 speed step"""
-        self.l.faster()
+        self._l.faster()
         
     def slower(self):
         """Reduce the speed"""
-        self.l.slower()
-        
-    def _set_speed(self,new_speed):
+        self._l.slower()
+    
+    def _get_speed(self):
+        return self._l.speed
+    
+    def speed(self,new_speed):
         """This function allow us to change the speed"""
         if not isinstance(new_speed, int):
             raise TypeError("vew_speed must be an integer but get "+ str(new_speed))
-        self.l.speed = new_speed
-    speed = property(_set_speed)
-            
+        self._l.speed = l.new_speed
+   
+     
+    def _get_fl(self):
+        return self._l.fl
+                
     def _set_fl(self,x):
         if x not in [False, True]:
             raise TypeError("x must be a bool but got "+str(x))
-        self.l._fl = x
-    fl = property(_set_fl)
+        self._l.fl = x
+    fl = property(_get_fl ,_set_fl)
     
+    def _get_f1(self):
+        return self.l.f1
+        
     def _set_f1(self,x):
         if not isinstance(x, bool):
             raise TypeError("x must be a bool but got "+str(x))
-        self.l._f1 = x
-    f1 = property(_set_f1)
+        self._l.f1 = x
+    f1 = property(_get_f1,_set_f1)
     
+    def _get_f2(self):
+        return self.l.f2
+        
     def _set_f2(self,x):
         if not isinstance(x, bool):
             raise TypeError("x must be a bool but got "+str(x))
-        self.l._f2 = x
-    f2 = property(_set_f2)
-    
+        self._l.f2 = x
+    f2 = property(_get_f2,_set_f2)
+
+    def _get_f3(self):
+        return self.l.f3
+        
     def _set_f3(self,x):
         if not isinstance(x, bool):
             raise TypeError("x must be a bool but got "+str(x))
-        self.l._f3 = x
-    f3 = property(_set_f3)
-    
+        self._l.f3 = x
+    f3 = property(_get_f3, _set_f3)
+
+    def _get_f4(self):
+        return self.l.f4
+        
     def _set_f4(self,x):
         if not isinstance(x, bool):
             raise TypeError("x must be a bool but got "+str(x))
-        self.l._f4 = x
-    f4 = property(_set_f4)
+        self._l.f4 = x
+    f4 = property(_get_f4, _set_f4)
