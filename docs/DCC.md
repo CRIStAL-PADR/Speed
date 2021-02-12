@@ -1,4 +1,4 @@
-DCC
+﻿DCC
 ===
 
 **DCC** ( *système de commande numérique* ) est un standard utilisé  dans le modélisme ferroviaire pour commander individuellement des locomotives ou des accessoires de voie en modulant 
@@ -37,8 +37,9 @@ Comme logiciel de commande on pourra utiliser:
 ### La carte moteur ( le booster)
 
     Le choix d'utiliser une carte moteur est motivé par le fait que les cartes Arduino ou RaspberryPi ne sont pas capable de fournir assez de puissance.
-    Or le principe du standart DCC est de faire circuler une information « de commande » dans le circuit de puissance ( les rails) d’où l’importance d’avoir une carte moteur.
-	Comme choix de carte moteur nous allons utiliser LMD18200. Cette carte conserve la forme de la tension du signal présent à leur entrée (donc l’information) et amplifie le signal de sortie. La forme des impulsions sont conservée afin de conservée les codes transmis.
+    Or le principe du standart DCC est de faire circuler une information « de commande » dans le circuit de puissance ( les rails) d’où l’importance d’avoir une 
+    carte moteur.
+    Comme choix de carte moteur nous allons utiliser LMD18200. Cette carte conserve la forme de la tension du signal présent à leur entrée (donc l’information) et amplifie le signal de sortie. La forme des impulsions sont conservée afin de conservée les codes transmis.
 
 La RaspberryPI avec l'API dccpi
 ===============================
@@ -54,8 +55,13 @@ Hardware requirements
 * Booster (LMD 18200)
 * Note dccpi does not yet implement any advanced features like decoder registry operations (i.e. set address), you must ensure the decoder address before implementing it otherwise you risk registering the loco on the wrong address
 
-
+BOOSTER_TYPON
+=============
 	 
+![Booster schematics](RASBOOSTER.pdf)
+
+![Booster_typon schematics](typon_modifie.pdf)
+
 Lien qui peut ếtre utile pour comprendre comment les informations sont décodées
 [Train_miniature](http://stephane.ravaut.free.fr/Train_miniature/LE_DCC/Le_DCC_Comment_ca_marche.html)
 
