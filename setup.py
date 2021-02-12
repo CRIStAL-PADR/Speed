@@ -13,9 +13,6 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/CRIStAL-PADR/Speed",
     packages=setuptools.find_packages
-    install_requires=[
-        'dccpi',
-    ]
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

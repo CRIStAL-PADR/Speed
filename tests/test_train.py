@@ -11,8 +11,6 @@ class TestTrain(unittest.TestCase):
         
         with self.assertRaises(TypeError):
             Train("DCC1", "ad")
-        #with self.assertRaises(RuntimeError):
-            #Train("DCC", 0)
     def test_init_with_invalid_name(self):
         """Check that init returns an error when entering an invalid parameter"""
         with self.assertRaises(TypeError):
@@ -23,47 +21,47 @@ class TestTrain(unittest.TestCase):
     def test_set_speed_with_invalid_parameter(self):
         """ Test that the set_speed function return an error when inavlid parameter is given""" 
         with self.assertRaises(TypeError):
-            Train("DCC3",3).l.speed = "gas"
+            Train("DCC3",3).speed = "gas"
     
     def test_set_speed_with_valid_parameter(self):
         """ Test that the set_speed function work when a valid parameter is given""" 
-        Train("DCC6",6).l.speed = 10
+        Train("DCC6",6).speed = 10
     
     
     def test_fl_with_valid_parameter(self):
         """Test that the fl function work when a valid parameter is given"""
-        Train("DCC4",4).l.fl = True
+        Train("DCC4",4).fl = True
         
     def test_fl_with_invalid_parameter(self):
         """Test that the fl function return an error when an invalid parameter is given"""
         with self.assertRaises(TypeError):
-            Train("DCC4",4).l.fl = 5.6
+            Train("DCC4",4).fl = 5.6
     
     
     def test_f1_with_invalid_parameter(self):
         """Test that the f1 function return an error when an invalid parameter is given"""
         with self.assertRaises(TypeError):
-            Train("DCC4",4).l.f1= "hzdlu"
+            Train("DCC4",4).f1= "hzdlu"
         
     
     def test_f1_with_valid_parameter(self):
         """Test that the f1 function work when a valid parameter is given"""
-        Train("DCC4",4).l.f1 = False
+        Train("DCC4",4).f1 = False
 
     def test_f2_with_valid_parameter(self):
         """Test that the f2 function work when a valid parameter is given"""
-        Train("DCC4",4).l.f2 = False
+        Train("DCC4",4).f2 = False
         
     
     def test_f2_with_invalid_parameter(self):
         """Test that the f2 function return an error when an invalid parameter is given"""
         with self.assertRaises(TypeError):
-            Train("DCC4",4).l.f2 = 6
+            Train("DCC4",4).f2 = 6
     
     def test_f3_with_invalid_parameter(self):
         """Test that the f3 function return an error when an invalid parameter is given"""
         with self.assertRaises(TypeError):
-            Train("DCC8",8).l.f2= " /"
+            Train("DCC8",8).f2= " /"
     
 
     dcc.stop()
