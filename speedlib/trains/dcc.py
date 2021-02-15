@@ -53,6 +53,10 @@ class Train:
             raise TypeError("vew_speed must be an integer but get "+ str(new_speed))
         self._l.speed = new_speed
     speed = property(_get_speed, _set_speed)
+    
+    def __repr__(self):
+        return " DCC locomotive : Name = {}, adress = {} ,speed = {}, fl= {} , f1 {} , f2 = {} , f3 = {} ,f4 = {} ".format(self.name, self.adress, self._l.speed, self._l.fl, self._l.f1, self._l.f2, self._l.f3, self._l.f4)
+  
      
     def _get_fl(self):
         return self._l.fl
