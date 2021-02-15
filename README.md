@@ -28,6 +28,7 @@ train1.speed = 14
 train1.faster()
 train1.slower()
 train1.fl = True 
+print(train1)
 dcc.stop()
 ```
 You can find more examples in the *examples* directory.

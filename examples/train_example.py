@@ -13,6 +13,7 @@ train1.slower() # Reduce speed by one step
 train1.faster() # Increase speed by one step
 train1.fl = True # Change fl function bit and allows to light it
 train1.f2 = True
-
+print(train1) # Print train1 information
+print(train2)  # Print train2 information
 dcc.stop() # Stop the controller
 
