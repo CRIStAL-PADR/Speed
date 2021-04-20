@@ -23,6 +23,8 @@ Controlling a DCC train model
 ```python
 from speedlib.trains import dcc
 from speedlib.trains.dcc import Train
+train1 = Train("DCC3",3) # Create the DCC controller with the RPi encoder, Create locos (args: Name, DCC Address) and Register locos on the controller
+train2 = Train("DCC1",1)
 dcc.start()
 train1.speed = 14
 train1.faster()
