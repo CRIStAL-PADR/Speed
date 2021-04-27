@@ -2,7 +2,7 @@ Welcome to speedlib's documentation!
 =====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    documentation
    README

@@ -7,10 +7,8 @@ A python library to operate Speed devices.
 
 Currently the API has an unique backend allowing to control miniature devices like the Faller (c) Crane or DCC trains. 
 
-Examples
-^^^^^^^^
 Controlling a Faller (c) crane model
--------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     >>> from speedlib.cranes import faller
     >>> from speedlib.cranes.faller import Crane
@@ -25,7 +23,7 @@ Controlling a Faller (c) crane model
 
 
 Controlling a DCC train model
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     >>> from speedlib.trains import dcc
     >>> from speedlib.trains.dcc import Train
@@ -42,13 +40,13 @@ Controlling a DCC train model
 You can find more examples in the *examples* directory.
 
 Install
--------
+^^^^^^^
 git clone https://github.com/CRIStAL-PADR/Speed.git
 
 The library is in speedlib/__init__.py
 
 Tests
------
+^^^^^
 To starts the unit tests you can do:
 
 cd tests/
