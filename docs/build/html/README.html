@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html lang="English">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutorial &#8212; speedlib 2.3.3 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="License" href="license.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="license.html" title="License"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">speedlib 2.3.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tutorial</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-the-speedlib-librairie">
+<h2>Using the SpeedLib librairie<a class="headerlink" href="#using-the-speedlib-librairie" title="Permalink to this headline">¶</a></h2>
+<p>A python library to operate Speed devices.</p>
+<p>Currently the API has an unique backend allowing to control miniature devices like the Faller (c) Crane or DCC trains.</p>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="controlling-a-faller-c-crane-model">
+<h2>Controlling a Faller (c) crane model<a class="headerlink" href="#controlling-a-faller-c-crane-model" title="Permalink to this headline">¶</a></h2>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">speedlib.cranes</span> <span class="kn">import</span> <span class="n">faller</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">speedlib.cranes.faller</span> <span class="kn">import</span> <span class="n">Crane</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ip_1</span> <span class="o">=</span> <span class="s2">&quot;172.17.217.217&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ip_2</span> <span class="o">=</span> <span class="s2">&quot;172.17.217.217&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crane_1</span> <span class="o">=</span> <span class="n">Crane</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crane_2</span> <span class="o">=</span> <span class="n">Crane</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crane_1</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">ip_1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crane_2</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">ip_2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crane_2</span><span class="o">.</span><span class="n">start_for</span><span class="p">(</span><span class="mi">20</span><span class="o">*</span><span class="n">faller</span><span class="o">.</span><span class="n">ureg</span><span class="o">.</span><span class="n">millisecond</span><span class="p">,</span><span class="n">faller</span><span class="o">.</span><span class="n">MotorChassis</span><span class="p">,</span><span class="n">faller</span><span class="o">.</span><span class="n">MotorDirectionForward</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crane_1</span><span class="o">.</span><span class="n">change_speed</span><span class="p">(</span><span class="n">faller</span><span class="o">.</span><span class="n">MotorCrab</span><span class="p">,</span> <span class="o">-</span><span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="controlling-a-dcc-train-model">
+<h2>Controlling a DCC train model<a class="headerlink" href="#controlling-a-dcc-train-model" title="Permalink to this headline">¶</a></h2>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">speedlib.trains</span> <span class="kn">import</span> <span class="n">dcc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">speedlib.trains.dcc</span> <span class="kn">import</span> <span class="n">Train</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train1</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span><span class="s2">&quot;DCC3&quot;</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train2</span> <span class="o">=</span> <span class="n">Train</span><span class="p">(</span><span class="s2">&quot;DCC1&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dcc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train1</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">14</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train1</span><span class="o">.</span><span class="n">faster</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train1</span><span class="o">.</span><span class="n">slower</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">train1</span><span class="o">.</span><span class="n">fl</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">train1</span><span class="p">)</span>
+<span class="go">&gt;&gt; dcc.stop()</span>
+</pre></div>
+</div>
+<p>You can find more examples in the <em>examples</em> directory.</p>
+<div class="section" id="install">
+<h3>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h3>
+<p>git clone <a class="reference external" href="https://github.com/CRIStAL-PADR/Speed.git">https://github.com/CRIStAL-PADR/Speed.git</a></p>
+<p>The library is in speedlib/__init__.py</p>
+</div>
+<div class="section" id="tests">
+<h3>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h3>
+<p>To starts the unit tests you can do:</p>
+<dl>
+<dt>cd tests/</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">PYTHONPATH</span><span class="o">=../</span> <span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#using-the-speedlib-librairie">Using the SpeedLib librairie</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#controlling-a-faller-c-crane-model">Controlling a Faller (c) crane model</a></li>
+<li><a class="reference internal" href="#controlling-a-dcc-train-model">Controlling a DCC train model</a><ul>
+<li><a class="reference internal" href="#install">Install</a></li>
+<li><a class="reference internal" href="#tests">Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="license.html"
+                        title="previous chapter">License</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/README.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="license.html" title="License"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">speedlib 2.3.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Tutorial</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Fabrice DEDO &amp;&amp; Damien MARCHAL.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+    </div>
+  </body>
+</html>
