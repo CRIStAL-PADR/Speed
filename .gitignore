@@ -6,4 +6,7 @@ faller.pyc
 
 __pycache__/
 
-
+build/
+doctrees/
+html/
+json/
