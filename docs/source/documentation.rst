@@ -19,6 +19,9 @@ the supply voltage of the track.
 
 The locomotives and their accessories (lights, effects) as well as the network accessories each have a unique address. 
 The coded signal sent on the track gives commands to the equipment while providing power.
+.. |Substitution Name| image:: ../Image/fig1.png
+  :width: 400
+  :alt: Alternative text
 
 Principle
 ---------
