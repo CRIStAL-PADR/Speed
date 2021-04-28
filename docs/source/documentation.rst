@@ -77,7 +77,7 @@ In the case of the speedlib project, we will use the RaspberryPI.
 Hardware requirements 
 ---------------------
 
-La RaspberryPI utilise une librairie `dccpi <https://pypi.org/project/dccpi/>`_ développé par  `Hector Sanjuan <https://github.com/hsanjuan?tab=overview&from=2017-12-01&to=2017-12-31>`_
+The RaspberryPI uses a library `dccpi <https://pypi.org/project/dccpi/>`_ developped by  `Hector Sanjuan <https://github.com/hsanjuan?tab=overview&from=2017-12-01&to=2017-12-31>`_
 This module implements the DCC protocol for controlling model trains using a Raspberry Pi.It is able to output direction and speed DCC-encoded packets on one 
 of the RPi GPIO pins. It needs WiringPi libraries to work.
 
