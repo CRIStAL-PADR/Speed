@@ -14,7 +14,7 @@ The principle of this library is based on the **DCC** protocol.
 DCC
 ---
 
-**DCC** ( *digital control system* ) is a standard used in model railroading to control individual locomotives or track accessories by modulating 
+**DCC** (*digital control system*) is a standard used in model railroading to control individual locomotives or track accessories by modulating 
 the supply voltage of the track.
 
 The locomotives and their accessories (lights, effects) as well as the network accessories each have a unique address. 
@@ -71,3 +71,13 @@ The choice to use an engine card is motivated by the fact that Arduino or Raspbe
 However, the principle of the DCC standard is to circulate "control" information in the power circuit (the rails), hence the importance of having a engine board.
 As a choice of motor board we will use LMD18200. This board keeps the shape of the voltage of the signal present at their input (so the information) 
 and amplifies the output signal. The shape of the impulses is kept in order to keep the transmitted codes.
+
+In the case of the speedlib project, we will use the RaspberryPI.
+
+Hardware requirements 
+---------------------
+
+La RaspberryPI utilise une librairie `dccpi <https://pypi.org/project/dccpi/>`_ développé par  `Hector Sanjuan <https://github.com/hsanjuan?tab=overview&from=2017-12-01&to=2017-12-31>`_
+This module implements the DCC protocol for controlling model trains using a Raspberry Pi.It is able to output direction and speed DCC-encoded packets on one 
+of the RPi GPIO pins. It needs WiringPi libraries to work.
+
