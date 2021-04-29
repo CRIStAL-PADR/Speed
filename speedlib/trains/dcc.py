@@ -25,7 +25,7 @@ class Train:
             raise TypeError(" name must be a str but got " +str(name))
         if not isinstance(adress, int):
             raise TypeError("adress must be an integer but got  " +str(adress))
-        if adress not in range(2, 126):
+        if adress not in rangegit(2, 126):
             raise RuntimeError("""The address must be between 1 and 127 but preferably 3
              which is the factory address but got """+str(adress))
 
