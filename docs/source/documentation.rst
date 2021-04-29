@@ -87,7 +87,7 @@ To obtain information on the locomotive or accessories, we can just do a print
     >>> print(train1.speed)
     >>> print(train1.f1)
 
-Nous avons deux moyens d'arrêter le train : 
+We have two ways to stop the train:
 
 Mettre la vitesse à 0 ou à une valeur inférieur à 5
     >>> train1.speed = 0
@@ -121,5 +121,5 @@ The initialization allows us to retrieve the ip address of the second engine to 
 We can then control the motor of the crane.With the start_for function you can move the MotorChassis forward or backward for example.
     >>> crane_2.start_for(20*faller.ureg.millisecond,faller.MotorChassis,faller.MotorDirectionForward)
 
-On peut également changer la vitesse avec la méthode change_speed ou donner une vitesse avec la méthode set_speed
+You can also change the speed with the change_speed method or give a speed with the set_speed method
     >>> crane_1.change_speed(faller.MotorCrab, -40)
