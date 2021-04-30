@@ -5,7 +5,6 @@ Welcome to speedlib's documentation!
    :maxdepth: 3
 
    documentation
-   README
    license
    
 

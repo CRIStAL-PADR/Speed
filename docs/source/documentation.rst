@@ -6,6 +6,24 @@ as well as the portic of the faller brand. It is made up of 2 librairies:
 * The trains librairies which controls the trains
 * The cranes library which controls the cranes
 
+train API features
+^^^^^^^^^^^^^^^^^^
+* Easy to install and use
+* Should works on multiple RPi operating systems
+* Control DCC locomotives using plain Python
+* Set speed  and direction
+* Set FL (lights), F1-F4 functions
+ 
+
+Crane API features
+^^^^^^^^^^^^^^^^^^
+* Easy to install and use
+* Should work on any linux system
+* At the moment only works for Faller (c) crane model
+* Use Python
+* Set speed, move forward and backward
+
+
 .. Warning::
     Since Speedlib is made up of two libraries, one for trains and the other for cranes, the library using trains
     only works on a RaspberryPI. It would be preferable to install Speedlib directly on a RaspberryPI in order to be able
@@ -115,8 +133,10 @@ After that, we will enter the ip addresses of the server contained in the microc
 
 We can now initialize cranes that we have just created.
 The initialization allows us to retrieve the ip address of the second engine to which the Spreader and Crab are connected.
-    >>> crane_1.init(ip_1)
-    >>> crane_2.init(ip_2)
+
+        >>> crane_2.init(ip_2)
+        >>> crane_1.init(ip_1)
+
 
 We can then control the motor of the crane.With the start_for function you can move the MotorChassis forward or backward for example.
     >>> crane_2.start_for(20*faller.ureg.millisecond,faller.MotorChassis,faller.MotorDirectionForward)
