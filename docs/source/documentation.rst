@@ -6,7 +6,7 @@ as well as the portic of the faller brand. It is made up of 2 librairies:
 * The trains librairies which controls the trains
 * The cranes library which controls the cranes
 
-train API features
+Train API features
 ^^^^^^^^^^^^^^^^^^
 * Easy to install and use
 * Should works on multiple RPi operating systems
@@ -25,9 +25,7 @@ Crane API features
 
 
 .. Warning::
-    Since Speedlib is made up of two libraries, one for trains and the other for cranes, the library using trains
-    only works on a RaspberryPI. It would be preferable to install Speedlib directly on a RaspberryPI in order to be able
-    to use the train and crane API.
+    The train API only works on a Raspberry
 
 Software requirements
 ^^^^^^^^^^^^^^^^^^^^^
@@ -40,15 +38,11 @@ Software requirements
 Hardware requirements
 ^^^^^^^^^^^^^^^^^^^^^
 
-For the trains
---------------
+For DCC train model
+-------------------
 * A Raspberry Pi (developed/tested on model B+)
 * DCC-decoder-equipped locomotives and tracks.
 * The Raspberry Pi needs an additional booster circuit to actually provide the signal to the tracks. (See the photo of the artwork below)
-
-.. image:: ../typon.jpg
-  :align: center
-  :alt: Typon
 
 For the cranes
 ---------------
@@ -143,3 +137,24 @@ We can then control the motor of the crane.With the start_for function you can m
 
 You can also change the speed with the change_speed method or give a speed with the set_speed method
     >>> crane_1.change_speed(faller.MotorCrab, -40)
+
+How to build a booster for the train API
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To drive the trains, the Raspberry does not provide enough power. You therefore need an amplifier capable of amplifying the signal coming out of the Raspberry without modifying it.
+This is the role of the booster.
+
+Here is the diagram from which I was inspired to build the booster:
+
+.. image:: ../booster_schema.png
+  :align: center
+  :alt: Typon
+
+.. Note::
+   I was inspired by the schema used by `booster <https://github.com/hsanjuan/dccpi/blob/master/dcc_booster_schem.png>`_ and made some modifications to it
+
+Here is a photo of the artwork
+
+.. image:: ../booster_typon.jpg
+  :align: center
+  :alt: Typon
+
