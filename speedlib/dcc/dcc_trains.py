@@ -1,11 +1,10 @@
 """
     Created on Tue May 4 2021
-    @author : fabrice
 """
 # -*-coding: <Utf-8> -*-
 from Speed.speedlib.dcc.dcc_object import DCCObject
 
-class Train:
+class Train(object):
     """
         Train class
     """
@@ -92,7 +91,7 @@ class Train:
     f4 = property(_get_f4, _set_f4)
 
 if __name__ == "__main__":
-    train = Train("DCC3", 99)
-    train.speed = 15
-    train.f_light = True
-    print train
+    Train_1 = Train("DCC3", 99)
+    Train_1.speed = 15
+    Train_1.f_light = True
+    print Train_1

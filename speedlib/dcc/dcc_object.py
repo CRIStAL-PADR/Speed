@@ -1,4 +1,7 @@
-""" """
+"""
+    Created on Tue May 4 2021
+"""
+# -*-coding: <Utf-8> -*-
 # -*-coding: <Utf-8> -*-
 from dccpi import *
 
@@ -14,24 +17,12 @@ def stop():
 
 
 
-class DCCObject:
+class DCCObject(object):
     """ Speedlib librairie to control a locomive device"""
     def __init__(self, name, adress):
         """ this function takes a name and an address (an integer # 0) as
         parameters to create a train and  register it  on the controller
         """
-<<<<<<< HEAD:speedlib/dcc/dcc_object.py
-=======
-
-        if not isinstance(name, str):
-            raise TypeError(" name must be a str but got " +str(name))
-        if not isinstance(adress, int):
-            raise TypeError("adress must be an integer but got  " +str(adress))
-        if adress not in range(2, 100):
-            raise RuntimeError("""The address must be between 1 and 127 but preferably 3
-             which is the factory address but got """+str(adress))
-
->>>>>>> refs/remotes/origin/main:speedlib/trains/dcc.py
         self.name = name
         self.adress = adress
         self._l = DCCLocomotive(name, adress)  # Create locos, args: Name, DCC Address
@@ -80,16 +71,16 @@ class DCCObject:
                            self._l.f3, self._l.f4)
 
 
-    def _get_fl(self):
+    def _get_f_light(self):
         """Returns the current state of fl """
-        return self._l.fl
+        return self._l.f_light
 
-    def _set_fl(self, var):
+    def _set_f_light(self, var):
         """ change the state of fl """
         if var not in [False, True]:
             raise TypeError("var must be a bool but got "+str(var))
-        self._l.fl = var
-    fl = property(_get_fl, _set_fl)
+        self._l.f_light = var
+    f_light = property(_get_f_light, _set_f_light)
 
     def _get_f1(self):
         """Returns the current state of f1 """
@@ -134,28 +125,3 @@ class DCCObject:
             raise TypeError("var must be a bool but got "+str(var))
         self._l.f4 = var
     f4 = property(_get_f4, _set_f4)
-<<<<<<< HEAD:speedlib/dcc/dcc_object.py
-    
-=======
-
-class Switch(Train):
-
-    def __init__(self, name, adress):
-            
-        if not isinstance(name, str):
-            raise TypeError(" name must be a str but got " +str(name))
-        if not isinstance(adress, int):
-            raise TypeError("adress must be an integer but got  " +str(adress))
-        if adress not in range(101, 120):
-            raise RuntimeError("""The address must be between 1 and 127 but preferably 3
-             which is the factory address but got """+str(adress))
-             
-        Train.__init__(self, name, adress)
-        self._l = DCCLocomotive(name, adress)  # Create locos, args: Name, DCC Address
-        controller.register(self._l)  # Register locos on the controller
-        self.fl = False
-        self.f1 = False
-        self.f2 = False
-        self.f3 = False
-        self.f4 = False
->>>>>>> refs/remotes/origin/main:speedlib/trains/dcc.py
