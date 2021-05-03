@@ -2,7 +2,8 @@
     Created on Tue May 4 2021
 """
 # -*-coding: <Utf-8> -*-
-from Speed.speedlib.dcc.dcc_object import DCCObject
+import dcc_object
+from dcc_object import DCCObject
 
 class Train(object):
     """
@@ -92,6 +93,8 @@ class Train(object):
 
 if __name__ == "__main__":
     Train_1 = Train("DCC3", 99)
+    dcc_object.start()
     Train_1.speed = 15
     Train_1.f_light = True
-    print Train_1
+    print (Train_1)
+    dcc_object.stop()
