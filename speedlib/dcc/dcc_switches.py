@@ -2,7 +2,8 @@
     Created on Tue May 4 2021
 """
 # -*-coding: <Utf-8> -*-
-from Speed.speedlib.dcc.dcc_object import DCCObject
+import dcc_object
+from dcc_object import DCCObject
 
 class Switch(object):
     """
@@ -22,51 +23,19 @@ class Switch(object):
              which is the factory address but got """+str(adress))
         self.dccobject = DCCObject(name, adress)
 
-    def __repr__(self):
-        return self.dccobject.__repr__()
 
-    def _get_f_light(self):
-        """Returns the current state of fl """
-        return self.dccobject.f_light
-
-    def _set_f_light(self, var):
-        """ change the state of fl """
-        self.dccobject.f_light = var
-    f_light = property(_get_f_light, _set_f_light)
-
-    def _get_f1(self):
-        """Returns the current state of f1 """
+    def _get_biais(self):
+        """Returns the current state of the switch """
         return self.dccobject.f1
 
-    def _set_f1(self, var):
-        """ change the state of f1 """
+    def _set_biais(self, var):
+        """ change the state of the switch """
         self.dccobject.f1 = var
-    f1 = property(_get_f1, _set_f1)
-
-    def _get_f2(self):
-        """Returns the current state of f1 """
-        return self.dccobject.f1
-
-    def _set_f2(self, var):
-        """ change the state of f1 """
-        self.dccobject.f2 = var
-    f2 = property(_get_f2, _set_f2)
-
-    def _get_f3(self):
-        """Returns the current state of f1 """
-        return self.dccobject.f3
-
-    def _set_f3(self, var):
-        """ change the state of f1 """
-        self.dccobject.f3 = var
-    f3 = property(_get_f3, _set_f3)
-
-    def _get_f4(self):
-        """Returns the current state of f1 """
-        return self.dccobject.f4
-
-    def _set_f4(self, var):
-        """ change the state of f1 """
-        self.dccobject.f4 = var
-    f4 = property(_get_f4, _set_f4)
+    biais = property(_get_biais, _set_biais)
     
+
+if __name__ == "__main__":
+    S = Switch("DCC", 102)
+    dcc_object.start()
+    S.biais = True
+    dcc_object.stop()
