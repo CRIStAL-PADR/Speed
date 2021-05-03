@@ -5,8 +5,8 @@
 faller.pyc
 
 __pycache__/
+*.html
+*.js
+*.inv
 
-build/
-doctrees/
-html/objects.inv
-json/
+
