@@ -2,8 +2,6 @@
 # -*-coding: <Utf-8> -*-
 from dccpi import *
 
-
-
 e = DCCRPiEncoder()
 controller = DCCController(e) #Create the DCC controller with the RPi encoder
 
@@ -27,7 +25,7 @@ class Train:
             raise TypeError(" name must be a str but got " +str(name))
         if not isinstance(adress, int):
             raise TypeError("adress must be an integer but got  " +str(adress))
-        if adress not in rangegit(2, 100):
+        if adress not in range(2, 100):
             raise RuntimeError("""The address must be between 1 and 127 but preferably 3
              which is the factory address but got """+str(adress))
 
@@ -142,11 +140,11 @@ class Switch(Train):
             raise TypeError(" name must be a str but got " +str(name))
         if not isinstance(adress, int):
             raise TypeError("adress must be an integer but got  " +str(adress))
-        if adress not in rangegit(101, 120):
+        if adress not in range(101, 120):
             raise RuntimeError("""The address must be between 1 and 127 but preferably 3
              which is the factory address but got """+str(adress))
              
-        Personne.__init__(self, name, adress)
+        Train.__init__(self, name, adress)
         self._l = DCCLocomotive(name, adress)  # Create locos, args: Name, DCC Address
         controller.register(self._l)  # Register locos on the controller
         self.fl = False
