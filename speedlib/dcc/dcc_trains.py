@@ -2,8 +2,9 @@
     Created on Tue May 4 2021
 """
 # -*-coding: <Utf-8> -*-
-import dcc_object
-from dcc_object import DCCObject
+from speedlib.dcc import dcc_object
+from speedlib.dcc.dcc_object import DCCObject
+
 
 class Train(object):
     """

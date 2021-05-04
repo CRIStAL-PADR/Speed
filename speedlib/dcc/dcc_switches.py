@@ -2,8 +2,8 @@
     Created on Tue May 4 2021
 """
 # -*-coding: <Utf-8> -*-
-import dcc_object
-from dcc_object import DCCObject
+from speedlib.dcc import dcc_object
+from speedlib.dcc.dcc_object import DCCObject
 
 class Switch(object):
     """
@@ -19,8 +19,7 @@ class Switch(object):
         if not isinstance(adress, int):
             raise TypeError("adress must be an integer but got  " +str(adress))
         if adress not in range(101, 126):
-            raise RuntimeError("""The address must be between 1 and 127 but preferably 3
-             which is the factory address but got """+str(adress))
+            raise RuntimeError("""The address must be between 101 and 125 but got """+str(adress))
         self.dccobject = DCCObject(name, adress)
 
 
@@ -32,7 +31,7 @@ class Switch(object):
         """ change the state of the switch """
         self.dccobject.f1 = var
     biais = property(_get_biais, _set_biais)
-    
+     
 
 if __name__ == "__main__":
     S = Switch("DCC", 102)
