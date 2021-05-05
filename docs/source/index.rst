@@ -5,6 +5,7 @@ Welcome to speedlib's documentation!
    :maxdepth: 3
 
    documentation
+   booster_circuit
    license
    
 
