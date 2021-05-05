@@ -8,5 +8,5 @@ __pycache__/
 *.html
 *.js
 *.inv
-
+*yml
 
