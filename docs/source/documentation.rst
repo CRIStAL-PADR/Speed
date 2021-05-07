@@ -61,13 +61,6 @@ To install Speedlib, open a new Terminal window and type the following command
 
     >>> sudo python setup.py install
 
-Tests
-^^^^^
-To starts the unit tests you can do:
-
-cd tests/
-    >>> PYTHONPATH=../ python3 -m unittest
-
 Controlling a DCC train model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Here is an example of how to use the Train library to control a locomotive and its accessories
@@ -138,23 +131,10 @@ We can then control the motor of the crane.With the start_for function you can m
 You can also change the speed with the change_speed method or give a speed with the set_speed method
     >>> crane_1.change_speed(faller.MotorCrab, -40)
 
-How to build a booster for the train API
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To drive the trains, the Raspberry does not provide enough power. You therefore need an amplifier capable of amplifying the signal coming out of the Raspberry without modifying it.
-This is the role of the booster.
+Tests
+^^^^^
+To starts the unit tests you can do:
 
-Here is the diagram from which I was inspired to build the booster:
-
-.. image:: ../booster_schema.png
-  :align: center
-  :alt: Typon
-
-.. Note::
-   I was inspired by the schema used by `booster <https://github.com/hsanjuan/dccpi/blob/master/dcc_booster_schem.png>`_ and made some modifications to it
-
-Here is a photo of the artwork
-
-.. image:: ../booster_typon.jpg
-  :align: center
-  :alt: Typon
+cd tests/
+    >>> PYTHONPATH=../ python3 -m unittest
 
