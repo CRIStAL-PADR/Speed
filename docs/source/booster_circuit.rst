@@ -22,7 +22,7 @@ List of components
 * Borniers 2 Contacts au pas 5.08 MM
    
 
-Here is a photo of the artwork and the realization
+Here is an image of how the artwork and the working prototype look like
 
 .. image:: ../booster_typon.jpg
   :align: left
