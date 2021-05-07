@@ -11,7 +11,7 @@ This is the role of the booster.
   :alt: Typon
 
 List of components
-^^^^^^^^^^^^^^^^^^
+-------------------
 * Regulateur : CI1 L7805
 * Pont H :  CI2 LMD18200
 * Resistances : R1 10 kOHMS, R2 2 KOHMS, R3 3.3 KOHMS, R4 330 kOHMS
@@ -32,4 +32,5 @@ Here is an image of how the artwork and the working prototype look like
 .. image:: ../booster_realisation.jpg
   :align: right
   :alt: Typon
+
 
