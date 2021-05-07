@@ -37,7 +37,7 @@ Controlling a DCC train model
     >>> train1.slower()
     >>> train1.fl = True 
     >>> print(train1)
-    >> dcc.stop()
+    >>> dcc.stop()
 
 You can find more examples in the *examples* directory.
 
