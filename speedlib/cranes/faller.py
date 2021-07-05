@@ -84,7 +84,7 @@ class Crane:
         return (self.start(sNr, turn), self.stop(sNr))
   
             
-    def start_for(self, t, sNr, turn ):
+    async def start_for(self, t, sNr, turn ):
         
         """:param t : This is the time during which we decide to run a motor. The syntax is t * ureg.second
         It is noted that we can also write t * ureg.millisecond in case we decide to run the engine for t millisecond.
@@ -105,10 +105,19 @@ class Crane:
         print("start")
         while time.time()*ureg.second - init_time < t:
             self.start(sNr, turn)
+            await asyncio.sleep(0.01)
         self.stop(sNr)
         print("stop")
 
-        
+    async def main(self, t, turn_motor1, motor1 , turn_motor2, motor2 , turn_motor3, motor3):
+
+        await asyncio.wait( [
+                loop.create_task(self.start_for(t, motor1, turn_motor1)),
+                loop.create_task(self.start_for(t, motor2, turn_motor2)),
+                loop.create_task(self.start_for(t, motor3, turn_motor3))
+            ] )
+
+
 
     def _get_battery(self):
         """
@@ -184,6 +193,7 @@ class Crane:
         if r.status_code != 200:
             raise RuntimeError ("I failed to get the IP address of the slave. Check if the latter is correctly supplied then try again")
         return r.text
+    
         
 
 
@@ -202,13 +212,23 @@ if __name__ == "__main__":
     crane_1.init(ip_1)
     crane_2.init(ip_2)
 
+    #  Avec la méthode get_event_loop() contenue dans la classe asyncio, on  initialise dans une variable loop une boucle
+    # d'évenement
+    loop = asyncio.get_event_loop()
+    #loop.set_debug(1)
+   
+    loop.run_until_complete(crane_1.main(2*ureg.second, MotorDirectionBackward, MotorSpreader, 
+                                    MotorDirectionBackward, MotorChassis,
+                                    MotorDirectionForward, MotorCrab ))
+    loop.close()
+
     print(crane_1.battery)
-    print(crane_1.change_speed(MotorCrab, 40))
+    #print(crane_1.change_speed(MotorCrab, 40))
 
     print(crane_2.change_speed(MotorSpreader,20))
     print(crane_2.battery)
-    crane_2.step(MotorChassis ,MotorDirectionBackward)
-    crane_1.step(MotorCrab, MotorDirectionBackward)
-    print (crane_1.get_speed(MotorCrab))
-    crane_2.start_for(1*ureg.second,MotorSpreader,MotorDirectionBackward)
+    #crane_2.step(MotorChassis ,MotorDirectionBackward)
+    #crane_1.step(MotorCrab, MotorDirectionBackward)
+    #print (crane_1.get_speed(MotorCrab))
+
 
