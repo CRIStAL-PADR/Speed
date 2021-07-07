@@ -13,7 +13,7 @@ MotorSpreader = 2
 MotorCrab = 1
 MotorChassis = 3
 MotorDirectionBackward = 1
-MotorDirectionForward = 2
+MotorDirectionForward = -1
 
 
 class Crane:
