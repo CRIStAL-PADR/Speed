@@ -11,8 +11,8 @@
     system for overall management
 """
 # -*-coding: <Utf-8> -*-
-import dcc_object
-from dcc_object import DCCObject
+from speedlib.dcc import dcc_object
+from speedlib.dcc.dcc_object import DCCObject
 
 class Switch():
     """ This class is used to control Servo motors """
@@ -35,10 +35,10 @@ class Switch():
         self.adress = adress
         self.biais_id = biais_id
 
-        #if not isinstance(self.biais_id, int):
-            #raise TypeError("biais_id must be an int but got "+str(self.biais_id))
-        #if self.biais_id not in [1, 2]:
-            #raise ValueError("biais_id must be an 1 or 2 but got "+str(self.biais_id))
+        if not isinstance(self.biais_id, int):
+            raise TypeError("biais_id must be an int but got "+str(self.biais_id))
+        if self.biais_id not in [1, 2]:
+            raise ValueError("biais_id must be an 1 or 2 but got "+str(self.biais_id))
         if not isinstance(name, str):
             raise TypeError(" name must be a str but got " +str(name))
         if not isinstance(adress, int):
@@ -59,7 +59,7 @@ class Switch():
         """
         return self.dccobject.f1, self.dccobject.fl
 
-    def _set_biais(self, var):
+    def _set_biais(self, state):
         """
         Parameters
         ----------
@@ -71,15 +71,15 @@ class Switch():
         None.
 
         """
-        if not isinstance(var, bool):
-            raise TypeError(" var must me a boolean but got "+str(var))
+        #if not isinstance(state, bool):
+            #raise TypeError(" var must me a boolean but got "+str(state))
 
         if self.biais_id == 1:
-            self.dccobject.f1 = var
-            self.dccobject.fl = var
+            self.dccobject.f1 = state
+            self.dccobject.fl = state
 
         elif self.biais_id == 2:
-            self.dccobject.f2 = var
+            self.dccobject.f2 = state
             self.dccobject.reverse()
             
 
