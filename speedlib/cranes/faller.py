@@ -1,11 +1,10 @@
 # -*-coding: <Utf-8> -*-
 """ Comments for all the librairy """
-
-import requests
+import queue
+import threading
 import re
 import time
-import threading
-import queue
+import requests
 from pint import UnitRegistry
 
 timeout = 3
@@ -16,33 +15,39 @@ MotorChassis = 3
 MotorDirectionBackward = 1
 MotorDirectionForward = -1
 
-q = queue.Queue()
-verrou = threading.RLock()
+
 
 
 class Crane():
-    #def __init__(self):
-        #self.["MotorSpreader"]Thread(target = self.run_start_for, daemon = True )
-    def run_start_for(self):
-        time.sleep(0.5)
-        arguments = q.get()
-        init_time = time.time()*ureg.second
-        print("start")
-        print(arguments[1], threading.current_thread().name)
-        while not q.empty() and time.time()*ureg.second - init_time < arguments[0]:
-            self.start(arguments[1], arguments[2])
-        print("stop")
-        self.stop(arguments[1])
-        q.task_done()
+    def __init__(self):
+        self.dict_q = {}
+        for i in range(1,4):
+            self.dict_q[i] = queue.Queue()
+            threading.Thread(target = self.run_start_for, daemon = True, args=(i,) ).start()
+
+
+    def run_start_for(self, id_moteur):
+        time.sleep(0.05)
+        while True:
+            if id_moteur in self.dict_q.keys() :
+                arguments = self.dict_q[id_moteur].get()
+                init_time = time.time()*ureg.second
+                print("start")
+                while time.time()*ureg.second - init_time < arguments[0]:
+                    self.start(arguments[1], arguments[2])
+                print("stop")
+                self.stop(arguments[1])
+                self.dict_q[id_moteur].task_done()
+            else:
+                raise RuntimeError("motor_id Error")
+
 
 
     def get_motor_info_from_number(self, sNr):
         """
         It takes the crane as input and returns the  number of the motor with its IP address.
         :param : see def start (sNr, turn) parameters
-
         """
-
         if not isinstance(sNr, int):
             raise TypeError(" The value of n must be an integer but got " +str(sNr))
 
@@ -52,20 +57,24 @@ class Crane():
             return (self.ip_slave, 2)
         elif MotorChassis == sNr:
             return (self.ip_master, 1)
-        raise RuntimeError("Invalid motor number, must be MotorSpreader, MotorCrab or MotorChassis, got "+str(sNr))
+        raise RuntimeError("""Invalid motor number, must be MotorSpreader, MotorCrab or
+                              MotorChassis, got """+str(sNr))
 
     def start (self, sNr, turn):
         """
-        :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
-        :param turn: It indicates the direction in which we would like to run the engine. 1 for moving forward and -1 for moving backward.
-
-
+        :param sNr: This is the first of the arguments. It indicates the engine number that we would
+        like to start.
+        It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
+        :param turn: It indicates the direction in which we would like to run the engine.
+         1 for moving forward and -1 for moving backward
         """
         if turn not in [MotorDirectionForward, MotorDirectionBackward]:
-            raise RuntimeError("Invalid parameter, turn must be either MotorDirectionForward or MotorDirectionBackward. Got " +str(turn))
+            raise RuntimeError("""Invalid parameter, turn must be either MotorDirectionForward or
+                                  MotorDirectionBackward. Got """ +str(turn))
 
         ip, numMotor = self.get_motor_info_from_number(sNr)
-        r = requests.get("http://"+ip+"/startM?sNr="+str(numMotor)+"&turn="+str(turn),timeout=timeout)
+        r = requests.get("http://"+ip+"/startM?sNr="+str(numMotor)+"&turn="+str(turn),
+                         timeout=timeout)
 
         if r.status_code !=200:
             raise RuntimeError("Unable to control the motor, "+str(r.status_code))
@@ -76,8 +85,9 @@ class Crane():
 
     def stop(self, sNr):
         """
-        :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
-
+        :param sNr: This is the first of the arguments. It indicates the engine number that
+        we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3
+        respectively
         """
         global timeout
         ip, numMotor = self.get_motor_info_from_number(sNr)
@@ -92,9 +102,8 @@ class Crane():
 
     def step (self, sNr, turn):
         """
-        :param sNr: This is the first of the arguments. It indicates the engine number that we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
-        :param turn: It indicates the direction in which we would like to run the engine. 1 for moving forward and -1 for moving backward.
-
+        :param sNr: see start function
+        :param turn: see start function
         Example:
         step(MotorSpreader, MotorDirectionBackward)  turns the spreader backwards
         """
@@ -103,8 +112,10 @@ class Crane():
 
     def start_for(self, t, sNr, turn ):
 
-        """:param t : This is the time during which we decide to run a motor. The syntax is t * ureg.second
-        It is noted that we can also write t * ureg.millisecond in case we decide to run the engine for t millisecond.
+        """:param t : This is the time during which we decide to run a
+            motor. The syntax is t * ureg.second
+        It is noted that we can also write t * ureg.millisecond in case
+        we decide to run the engine for t millisecond.
         :param sNr : See the start function
         :param turn :See the start function
 
@@ -113,14 +124,16 @@ class Crane():
         Here we decide to rotate the Chassis forward for 5000 nanosecond
         """
         if sNr not in [MotorChassis, MotorSpreader, MotorCrab]:
-            raise RuntimeError("Invalid parameter, sNr must be either MotorChassis or MotorSpreader or MotorCrab . Got " +str(sNr))
+            raise RuntimeError("""Invalid parameter, sNr must be either MotorChassis or
+                                MotorSpreader or MotorCrab . Got """ +str(sNr))
 
         if t < 0:
             raise ValueError("t must be greater than 0 but got "+str(t))
 
-        threading.Thread(target = self.run_start_for, daemon = True, name =str(sNr)).start()
+        #threading.Thread(target = self.run_start_for, daemon = True, name =str(sNr)).start()
         arguments = [t, sNr, turn]
-        q.put(arguments)
+        self.dict_q[sNr].put(arguments)
+
 
 
 
@@ -132,7 +145,8 @@ class Crane():
 
     def _get_battery(self):
         """
-        This function returns the battery state : the state of the master's battery as well as that of the slave
+        This function returns the battery state : the state of
+        the master's battery as well as that of the slave
         """
 
         global timeout
@@ -154,18 +168,20 @@ class Crane():
         """
         This function allows us to modify the engine speed while varying its cyclic ratio.
         :param sNr:  see def start (sNr, turn) parameters
-        :param diff: This parameter is used to vary the speed of the motor. Il s'agit d'un entier.
-        It should be noted that the maximum speed that the motor can reach is 100 and the motor speed cannot drop below 30
+        :param diff: This parameter is used to vary the speed of the motor. it is an integer
+        It should be noted that the maximum speed that the motor can reach is 100 and the
+         motor speed cannot drop below 30
         Example:
 		change_speed( MotorSpreader, -60 ) : allows to decrease the motorspeed 3 by 60
         """
         global timeout
 
         if not isinstance (diff, int):
-            raise TypeError()
+            raise TypeError("diff must be an int but got "+str(diff))
 
         ip, numMotor = self.get_motor_info_from_number(sNr)
-        r = requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff), timeout=timeout)
+        r = requests.get("http://"+ip+"/changePWMTV?sNr="+str(numMotor)+"&diff="+str(diff),
+                          timeout=timeout)
 
         if r.status_code != 200:
             raise RuntimeError("Unable to change the speed of the motor,"+str(r.status_code))
@@ -188,7 +204,8 @@ class Crane():
 
     def init (self, ip):
         """
-        The purpose of this function is to initialize the IP address of the master and once the IP address of the master is
+        The purpose of this function is to initialize the IP address of
+        the master and once the IP address of the master is
         initialized to obtain that of the slave thanks to the getOtherEsp function
         """
         global ip_master, ip_slave
@@ -202,7 +219,8 @@ class Crane():
         global timeout
         r = requests.get("http://" + ip + "/getOtherEsp", timeout = timeout)
         if r.status_code != 200:
-            raise RuntimeError ("I failed to get the IP address of the slave. Check if the latter is correctly supplied then try again")
+            raise RuntimeError ("""I failed to get the IP address of the slave.
+            Check if the latter is correctly supplied then try again""")
         return r.text
 
 
@@ -219,20 +237,25 @@ if __name__ == "__main__":
     crane_1.init(ip_1)
     crane_2.init(ip_2)
 
-    #  Avec la méthode get_event_loop() contenue dans la classe asyncio, on  initialise dans une variable loop une boucle
-    # d'évenement
-    crane_1.start_for(0.1*ureg.second, MotorSpreader, MotorDirectionForward)
-    crane_2.start_for(0.1*ureg.second, MotorCrab, MotorDirectionForward)
+
+    crane_1.start_for(1*ureg.second, MotorSpreader, MotorDirectionForward)
+    crane_2.start_for(1*ureg.second, MotorCrab, MotorDirectionForward)
 
     #crane_1.start_for(2*ureg.second, MotorCrab, MotorDirectionForward)
     crane_1.fswitch(10)
 
     print(crane_1.battery)
-    #print(crane_1.change_speed(MotorCrab, 40))
+    print(crane_1.change_speed(MotorCrab, 40))
+    crane_2.start_for(1*ureg.second, MotorChassis, MotorDirectionForward)
 
     print(crane_2.change_speed(MotorSpreader,20))
     print(crane_2.battery)
     #crane_2.step(MotorChassis ,MotorDirectionBackward)
     #crane_1.step(MotorCrab, MotorDirectionBackward)
-    #print (crane_1.get_speed(MotorCrab))
-    q.join()
+    print (crane_1.get_speed(MotorCrab))
+    crane_1.dict_q[1].join()
+    crane_1.dict_q[2].join()
+    crane_1.dict_q[3].join()
+    crane_2.dict_q[1].join()
+    crane_2.dict_q[2].join()
+    crane_2.dict_q[3].join()
