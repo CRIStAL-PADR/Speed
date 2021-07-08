@@ -76,19 +76,21 @@ class Switch():
 
         if self.biais_id == 1:
             self.dccobject.f1 = var
-            print("i")
             self.dccobject.fl = var
 
         elif self.biais_id == 2:
             self.dccobject.f2 = var
             self.dccobject.reverse()
+            
 
     biais = property(_get_biais, _set_biais)
 
 
 
 if __name__ == "__main__":
-    S = Switch("DCC3", 3, 1)
+    S = Switch("DCC3", 3, 2)
     dcc_object.start()
-    S.biais = True
+    S.biais = False
     dcc_object.stop()
+    
+    
