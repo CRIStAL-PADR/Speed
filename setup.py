@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="speedlib",
-    version="2.3.5",
+    version="2.3.6",
     author="Fabrice Dedo & Damien Marchal",
     author_email="komla-sam-fabrice.dedo@polytech-lille.net",
     description="A python library to operate 'Speed' devices",

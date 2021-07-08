@@ -13,6 +13,7 @@
 # -*-coding: <Utf-8> -*-
 from speedlib.dcc import dcc_object
 from speedlib.dcc.dcc_object import DCCObject
+import time
 
 class Switch():
     """ This class is used to control Servo motors """
@@ -48,14 +49,6 @@ class Switch():
 
         self.dccobject = DCCObject(name, adress)
 
-        def __repr__(self):
-        return """  Switche : Name = {},
-        address = {}, 
-        biais_id = {},  
-        biais = {} """.format(self.name, self.adress,
-                           self.biais_id, self.biais)
-
-
     def _get_biais(self):
         """
         Returns
@@ -67,7 +60,7 @@ class Switch():
         if self.biais_id == 1:
             return self.dccobject.f1, self.dccobject.f_light
         elif self.biais_id == 2:
-            return self.dccobjetc.f2
+            return self.dccobject.f2
     
     def set_biais_id(self, id):
         """
@@ -115,5 +108,10 @@ class Switch():
 if __name__ == "__main__":
     S = Switch("DCC3", 3, 2)
     dcc_object.start()
+    S.biais = True
+    time.sleep(1)
+    S.set_biais_id(1)
+    time.sleep(1)
     S.biais = False
     dcc_object.stop()
+    
