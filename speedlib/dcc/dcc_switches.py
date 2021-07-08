@@ -81,7 +81,7 @@ class Switch():
         elif self.biais_id == 2:
             self.dccobject.f2 = state
             self.dccobject.reverse()
-            
+
 
     biais = property(_get_biais, _set_biais)
 
@@ -93,5 +93,3 @@ if __name__ == "__main__":
     S.biais = False
     time.sleep(3)
     dcc_object.stop()
-    
-    
