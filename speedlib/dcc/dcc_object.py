@@ -73,13 +73,13 @@ class DCCObject(object):
 
     def _get_f_light(self):
         """Returns the current state of fl """
-        return self._l.f_light
+        return self._l.fl
 
     def _set_f_light(self, var):
         """ change the state of fl """
         if not isinstance(var, bool):
             raise TypeError("var must be a bool but got "+str(var))
-        self._l.f_light = var
+        self._l.fl = var
     f_light = property(_get_f_light, _set_f_light)
 
     def _get_f1(self):

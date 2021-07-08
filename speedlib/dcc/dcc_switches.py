@@ -11,9 +11,9 @@
     system for overall management
 """
 # -*-coding: <Utf-8> -*-
-from speedlib.dcc import dcc_object
-from speedlib.dcc.dcc_object import DCCObject
-
+import dcc_object
+from dcc_object import DCCObject
+import time
 class Switch():
     """ This class is used to control Servo motors """
     def __init__(self, name, adress, biais_id):
@@ -71,12 +71,12 @@ class Switch():
         None.
 
         """
-        #if not isinstance(state, bool):
-            #raise TypeError(" var must me a boolean but got "+str(state))
+        if not isinstance(state, bool):
+            raise TypeError(" var must me a boolean but got "+str(state))
 
         if self.biais_id == 1:
             self.dccobject.f1 = state
-            self.dccobject.fl = state
+            self.dccobject.f_light = state
 
         elif self.biais_id == 2:
             self.dccobject.f2 = state
@@ -91,6 +91,7 @@ if __name__ == "__main__":
     S = Switch("DCC3", 3, 2)
     dcc_object.start()
     S.biais = False
+    time.sleep(3)
     dcc_object.stop()
     
     

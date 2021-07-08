@@ -58,11 +58,11 @@ class Train():
 
     def _get_f_light(self):
         """Returns the current state of fl """
-        return self.dccobject.f_light
+        return self.dccobject.fl
 
     def _set_f_light(self, var):
         """ change the state of fl """
-        self.dccobject.f_light = var
+        self.dccobject.fl = var
     f_light = property(_get_f_light, _set_f_light)
 
     def _get_f1(self):
@@ -102,9 +102,8 @@ class Train():
     f4 = property(_get_f4, _set_f4)
 
 if __name__ == "__main__":
-    Train_1 = Train("DCC3", 99)
+    Train_1 = Train("DCC3", 3)
     dcc_object.start()
-    Train_1.speed = 15
     Train_1.f_light = True
     print (Train_1)
     dcc_object.stop()
