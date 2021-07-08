@@ -4,11 +4,11 @@
 import requests
 import re
 import time
-from threading import Thread
+import threading
 import queue
 from pint import UnitRegistry
 
-timeout = 2.5
+timeout = 3
 ureg = UnitRegistry()
 MotorSpreader = 2
 MotorCrab = 1
@@ -17,22 +17,23 @@ MotorDirectionBackward = 1
 MotorDirectionForward = -1
 
 q = queue.Queue()
+verrou = threading.RLock()
 
 
-class Crane(object):
+class Crane():
     #def __init__(self):
         #self.["MotorSpreader"]Thread(target = self.run_start_for, daemon = True )
     def run_start_for(self):
-        while True:
-            arguments = q.get()
-            init_time = time.time()*ureg.second
-            print("start")
-            while not q.empty() and time.time()*ureg.second - init_time < arguments[0]:
-                if not q.isEmpty():
-                    self.start(arguments[1], arguments[2])
-            print("stop")
-            self.stop(arguments[1])
-            q.task_done()
+        time.sleep(0.5)
+        arguments = q.get()
+        init_time = time.time()*ureg.second
+        print("start")
+        print(arguments[1], threading.current_thread().name)
+        while not q.empty() and time.time()*ureg.second - init_time < arguments[0]:
+            self.start(arguments[1], arguments[2])
+        print("stop")
+        self.stop(arguments[1])
+        q.task_done()
 
 
     def get_motor_info_from_number(self, sNr):
@@ -117,9 +118,10 @@ class Crane(object):
         if t < 0:
             raise ValueError("t must be greater than 0 but got "+str(t))
 
-        Thread(target = self.run_start_for, daemon = True )
+        threading.Thread(target = self.run_start_for, daemon = True, name =str(sNr)).start()
         arguments = [t, sNr, turn]
         q.put(arguments)
+
 
 
     def fswitch(self, value):
@@ -219,7 +221,8 @@ if __name__ == "__main__":
 
     #  Avec la méthode get_event_loop() contenue dans la classe asyncio, on  initialise dans une variable loop une boucle
     # d'évenement
-    crane_1.start_for(2*ureg.second, MotorSpreader, MotorDirectionForward)
+    crane_1.start_for(0.1*ureg.second, MotorSpreader, MotorDirectionForward)
+    crane_2.start_for(0.1*ureg.second, MotorCrab, MotorDirectionForward)
 
     #crane_1.start_for(2*ureg.second, MotorCrab, MotorDirectionForward)
     crane_1.fswitch(10)
