@@ -2,8 +2,8 @@
     Created on Tue May 4 2021
 """
 # -*-coding: <Utf-8> -*-
-from speedlib.dcc import dcc_object
-from speedlib.dcc.dcc_object import DCCObject
+import dcc_object
+from dcc_object import DCCObject
 
 class Switch(object):
     """
@@ -18,8 +18,8 @@ class Switch(object):
             raise TypeError(" name must be a str but got " +str(name))
         if not isinstance(adress, int):
             raise TypeError("adress must be an integer but got  " +str(adress))
-        if adress not in range(101, 126):
-            raise RuntimeError("""The address must be between 101 and 125 but got """+str(adress))
+        #if adress not in range(101, 126):
+            #raise RuntimeError("""The address must be between 101 and 125 but got """+str(adress))
         self.dccobject = DCCObject(name, adress)
 
 
@@ -30,7 +30,7 @@ class Switch(object):
     def _set_biais1(self, var):
         """ change the state of the switch """
         self.dccobject.f1 = var
-    biais1 = property(_get_biais, _set_biais)
+    biais1 = property(_get_biais1, _set_biais1)
     
     def _get_biais2(self):
         """Returns the current state of the switch """
@@ -39,7 +39,7 @@ class Switch(object):
     def _set_biais2(self, var):
         """ change the state of the switch """
         self.dccobject.f2 = var
-    biais2 = property(_get_biais, _set_biais)
+    biais2 = property(_get_biais2, _set_biais2)
     
     def _get_light_1(self):
         """ return the current state of the light 1"""
@@ -62,5 +62,6 @@ if __name__ == "__main__":
     dcc_object.start()
     S.biais1 = True
     S.biais2 = True
-    print(S)
-    dcc_object.stop()
+    S.light_1 = True
+    print(S.light_1)
+    #dcc_object.stop()
