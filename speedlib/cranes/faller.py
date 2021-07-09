@@ -1,5 +1,16 @@
+"""
+    Copyright (C) 2021  CNRS
+    This file is part of "Speedlib".
+    "Speedlib" is an API built for the use case of autonomous navigation.
+    It has  been developed to control quay cranes and trains of multimodal
+    waterborne Lab as part of The SPEED project, a project which aims to
+    enhance and support the growth of a system of connected port solutions,
+    with the use of data science and IoT (Internet of Things) technologies.
+    The library allows controlling the motion of the IoT devices at H0 scale
+    in automatic mode, in three directions and exchanging with the information
+    system for overall management
+"""
 # -*-coding: <Utf-8> -*-
-""" Comments for all the librairy """
 import queue
 import threading
 import re
@@ -216,7 +227,18 @@ class Crane():
         self.dict_q[snr].put(arguments)
 
     def fswitch(self, value):
+        """
+        Parameters
+        ----------
+        value : int
+            DESCRIPTION.
 
+        Returns
+        -------
+        TYPE : string
+            DESCRIPTION : eturn 'ok' when everything went well
+
+        """
         request_answer=requests.get("http://"+self.slave_ip+"/fswitch?nr=3"+"&v="+str(value)+
                                     "&dim=1", timeout=TIME_OUT)
         return request_answer.text
