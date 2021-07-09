@@ -19,7 +19,15 @@ MOTOR_DIRECTION_FORWARD  = 1
 
 
 class Crane():
+    """ This class is used to control cranes"""
     def __init__(self):
+        """
+        Creates the crane object. each crane has 3 motors, each with a Thread and a queue
+
+        Returns
+        -------
+        None.
+        """
         self.slave_ip = None
         self.master_ip = None
         self.dict_q = {}
@@ -29,6 +37,22 @@ class Crane():
 
 
     def run_start_for(self, id_moteur):
+        """
+        Parameters
+        ----------
+        id_moteur : int
+            DESCRIPTION: It is the motor number
+
+        Raises
+        ------
+        RuntimeError
+            DESCRIPTION Return a RuntimeError when the number
+            of motor is different from 1, 2 or 3
+
+        Returns
+        -------
+        None.
+        """
         while True:
             if id_moteur in self.dict_q.keys() :
                 arguments = self.dict_q[id_moteur].get()
@@ -46,8 +70,25 @@ class Crane():
 
     def get_motor_info_from_number(self, snr):
         """
-        It takes the crane as input and returns the  number of the motor with its IP address.
-        :param : see def start (sNr, turn) parameters
+        Parameters
+        ----------
+        snr : int
+            DESCRIPTION : It is the motornumber
+
+        Raises
+        ------
+        TypeError
+            DESCRIPTION : This exception is raised when the snr parameter is not an integer
+        RuntimeError
+            DESCRIPTION: This exception is raised when the motor number passed in parameter
+                        is different from 1, 2 and 3
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+        int
+            DESCRIPTION.
         """
         if not isinstance(snr, int):
             raise TypeError(" The value of n must be an integer but got " +str(snr))
@@ -66,12 +107,22 @@ class Crane():
 
     def start (self, snr, turn):
         """
-        :param sNr: This is the first of the arguments. It indicates the engine number that we would
-        like to start.
-        It takes the values ​​1 2 3 which indicates motors 1 2 and 3 respectively
-        :param turn: It indicates the direction in which we would like to run the engine.
-         1 for moving forward and -1 for moving backward
+        Parameters
+        ----------
+        snr : int
+            DESCRIPTION : It is the motor number
+        turn : int
+            DESCRIPTION : Direction in which we want the motor to go (-1 or 1)
+                          MOTOR_DIRECTION_BACKWARD = -1
+                          MOTOR_DIRECTION_FORWARD  = 1
+
+        Returns
+        -------
+        TYPE : string
+            DESCRIPTION : Return 'ok' when everything went well
+
         """
+
         if turn not in [MOTOR_DIRECTION_FORWARD , MOTOR_DIRECTION_BACKWARD ]:
             raise RuntimeError("""Invalid parameter, turn must be either MOTOR_DIRECTION_FORWARD  or
                                   MOTOR_DIRECTION_BACKWARD . Got """ +str(turn))
@@ -90,9 +141,15 @@ class Crane():
 
     def stop(self, snr):
         """
-        :param sNr: This is the first of the arguments. It indicates the engine number that
-        we would like to start. It takes the values ​​1 2 3 which indicates motors 1 2 and 3
-        respectively
+        Parameters
+        ----------
+        snr : int
+            DESCRIPTION : It is the motor number
+
+        Returns
+        -------
+        TYPE : string
+            DESCRIPTION : Return 'ok' when everything went well
         """
 
         i_p, num_motor = self.get_motor_info_from_number(snr)
@@ -108,27 +165,46 @@ class Crane():
 
     def step (self, snr, turn):
         """
-        :param sNr: see start function
-        :param turn: see start function
-        Example:
-        step(MOTOR_SPREADER, MOTOR_DIRECTION_BACKWARD )  turns the spreader backwards
+        Parameters
+        ----------
+        snr : int
+            DESCRIPTION : It is the motor number
+        turn : int
+            DESCRIPTION : Direction in which we want the motor to go (-1 or 1)
+                          MOTOR_DIRECTION_BACKWARD = -1
+                          MOTOR_DIRECTION_FORWARD  = 1
+
+        Returns
+        -------
+        TYPE : tuple of string
+            DESCRIPTION : Returns the result of the execution of the start and stop functions
+
         """
         return (self.start(snr, turn), self.stop(snr))
 
 
     def start_for(self, time_, snr, turn ):
-
-        """:param t : This is the time during which we decide to run a
-            motor. The syntax is t * ureg.second
-        It is noted that we can also write t * ureg.millisecond in case
-        we decide to run the engine for t millisecond.
-        :param sNr : See the start function
-        :param turn :See the start function
-
-        example
-        start_for(5000*ureg.nanosecond,MOTOR_CHASSIS ,MOTOR_DIRECTION_FORWARD )
-        Here we decide to rotate the Chassis forward for 5000 nanosecond
         """
+        Parameters
+        ----------
+        time_ : float or int
+            DESCRIPTION : Represents the time during which we would like to run the motor
+        snr : int
+            DESCRIPTION : It is the motor number
+        turn : int
+            DESCRIPTION : Direction in which we want the motor to go (-1 or 1)
+                          MOTOR_DIRECTION_BACKWARD = -1
+                          MOTOR_DIRECTION_FORWARD  = 1
+
+        Returns
+        -------
+        None.
+
+        Example
+        -------
+        start_for(5000*ureg.nanosecond,MOTOR_CHASSIS ,MOTOR_DIRECTION_FORWARD )
+        """
+
         if snr not in [MOTOR_CHASSIS , MOTOR_SPREADER, MOTOR_CRAB]:
             raise RuntimeError("""Invalid parameter, sNr must be either MOTOR_CHASSIS  or
                                 MOTOR_SPREADER or MOTOR_CRAB . Got """ +str(snr))
@@ -147,10 +223,11 @@ class Crane():
 
     def _get_battery(self):
         """
-        This function returns the battery state : the state of
-        the master's battery as well as that of the slave
+        Returns
+        -------
+        TYPE int
+            DESCRIPTION it is the state of the baterries
         """
-
         answer_1 = requests.get("http://"+self.master_ip+"/getBat?n=1", timeout=TIME_OUT)
         answer_2 = requests.get("http://"+self.slave_ip+"/getBat?n=2", timeout=TIME_OUT)
 
@@ -166,16 +243,19 @@ class Crane():
 
     def change_speed(self, snr, diff):
         """
-        This function allows us to modify the engine speed while varying its cyclic ratio.
-        :param sNr:  see def start (sNr, turn) parameters
-        :param diff: This parameter is used to vary the speed of the motor. it is an integer
-        It should be noted that the maximum speed that the motor can reach is 100 and the
-         motor speed cannot drop below 30
-        Example:
-		change_speed( MOTOR_SPREADER, -60 ) : allows to decrease the motorspeed 3 by 60
+        Parameters
+        ----------
+        snr : int
+            DESCRIPTION : it is the motor number
+        diff : int
+            DESCRIPTION : It is used to vary the speed of the motor
+
+        Returns
+        -------
+        num : int
+            DESCRIPTION : returns the value of the current speed of the motor
+
         """
-
-
         if not isinstance (diff, int):
             raise TypeError("diff must be an int but got "+str(diff))
 
@@ -192,22 +272,54 @@ class Crane():
         return num
 
     def get_speed(self , snr):
-        """ Returns the current speed for a motor """
+        """
+        Parameters
+        ----------
+        snr : TYPE
+            DESCRIPTION :  is the motor number
+
+        Returns
+        -------
+        TYPE : int
+            DESCRIPTION : Returns the current speed for a motor
+
+        """
 
         return self.change_speed(snr, 0)
 
     def set_speed(self , snr, speed):
+        """
+        Parameters
+        ----------
+        snr : int
+            DESCRIPTION : is the motor number
+        speed : int
+            DESCRIPTION : set the speed for a motor
 
-        """ set the speed for a motor """
+        Returns
+        -------
+        TYPE : int
+            DESCRIPTION : returns the value of the current speed of the motor
+
+        """
         current = self.change_speed(snr, 0)
         diff = speed - current
         return self.change_speed(snr, diff)
 
     def init (self, i_p):
         """
+        Parameters
+        ----------
+        i_p : string
+            DESCRIPTION :
         The purpose of this function is to initialize the IP address of
         the master and once the IP address of the master is
         initialized to obtain that of the slave thanks to the getOtherEsp function
+
+        Returns
+        -------
+        None.
+
         """
 
         self.master_ip = i_p
@@ -215,7 +327,17 @@ class Crane():
 
     def get_other_esp(self, i_p):
         """
-        This function has the role of launching a request to obtain the IP address of the slave
+        Parameters
+        ----------
+        i_p : string
+            DESCRIPTION :  This function has the role of launching a request
+                            to obtain the IP address of the slave
+
+        Returns
+        -------
+        TYPE : string
+            DESCRIPTION : Return 'ok' when everything went well
+
         """
         request_answer = requests.get("http://" + i_p + "/getOtherEsp", timeout = TIME_OUT)
         if request_answer.status_code != 200:
@@ -228,24 +350,24 @@ class Crane():
 if __name__ == "__main__":
 
 
-    crane1_ip = "172.17.217.217"
-    crane2_ip = "172.17.217.217"
+    i_p1 = "172.17.217.217"
+    i_p2 = "172.17.217.217"
 
     crane_1 = Crane()
     crane_2 = Crane()
 
-    crane_1.init(crane1_ip)
-    crane_2.init(crane2_ip)
+    crane_1.init(i_p1)
+    crane_2.init(i_p1)
 
 
     #crane_1.start_for(0.01*ureg.second, MOTOR_SPREADER, MOTOR_DIRECTION_BACKWARD )
     #crane_2.start_for(0.01*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
 
     #crane_1.start_for(2*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
-    print(crane_1.fswitch(10))
+    #print(crane_1.fswitch(10))
 
     #print(crane_1.battery)
-    #print(crane_1.change_speed(MOTOR_CRAB, 40))
+    print(crane_1.change_speed(MOTOR_CRAB, -40))
     #crane_2.start_for(0.01*ureg.second, MOTOR_CHASSIS , MOTOR_DIRECTION_FORWARD )
 
     #print(crane_2.change_speed(MOTOR_SPREADER,20))
