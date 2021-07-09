@@ -23,18 +23,44 @@ class Switch(object):
         self.dccobject = DCCObject(name, adress)
 
 
-    def _get_biais(self):
+    def _get_biais1(self):
         """Returns the current state of the switch """
         return self.dccobject.f1
 
-    def _set_biais(self, var):
+    def _set_biais1(self, var):
         """ change the state of the switch """
         self.dccobject.f1 = var
-    biais = property(_get_biais, _set_biais)
+    biais1 = property(_get_biais, _set_biais)
+    
+    def _get_biais2(self):
+        """Returns the current state of the switch """
+        return self.dccobject.f2
+
+    def _set_biais2(self, var):
+        """ change the state of the switch """
+        self.dccobject.f2 = var
+    biais2 = property(_get_biais, _set_biais)
+    
+    def _get_light_1(self):
+        """ return the current state of the light 1"""
+        return self.dccobject.fl
+    
+    def _set_light_1(self, var):
+        """ change the state of the light 1 """
+        self.dccobject.fl = var
+    light_1 = property(_get_light_1, _set_light_1)
+    
+    def light_2(self):
+        """ change the state of the light 2 """
+        self.dccobject.reverse()
+        
+    
      
 
 if __name__ == "__main__":
-    S = Switch("DCC", 102)
+    S = Switch("DCC3", 3)
     dcc_object.start()
-    S.biais = True
+    S.biais1 = True
+    S.biais2 = True
+    print(S)
     dcc_object.stop()
