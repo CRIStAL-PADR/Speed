@@ -11,8 +11,8 @@
     system for overall management
 """
 # -*-coding: <Utf-8> -*-
-from speedlib.dcc import dcc_object
-from speedlib.dcc.dcc_object import DCCObject
+import dcc_object
+from dcc_object import DCCObject
 
 class Switch():
     """ This class is used to control Servo motors """
@@ -33,8 +33,8 @@ class Switch():
             raise TypeError(" name must be a str but got " +str(name))
         if not isinstance(adress, int):
             raise TypeError("adress must be an integer but got  " +str(adress))
-        if adress not in range(101, 126):
-            raise RuntimeError("""The address must be between 101 and 125 but got """+str(adress))
+        #if adress not in range(101, 126):
+            #raise RuntimeError("""The address must be between 101 and 125 but got """+str(adress))
         self.dccobject = DCCObject(name, adress)
 
 
@@ -63,6 +63,7 @@ class Switch():
         if not isinstance(var, bool):
             raise TypeError(" var must me a boolean but got "+str(var))
         self.dccobject.f1 = var
+
     biais_one = property(_get_biais_one, _set_biais_one)
 
     def _get_biais_two(self):
@@ -73,6 +74,12 @@ class Switch():
             DESCRIPTION : Returns the current state of the switch
 
         """
+
+    biais1 = property(_get_biais1, _set_biais1)
+    
+    def _get_biais2(self):
+        """Returns the current state of the switch """
+
         return self.dccobject.f2
 
     def _set_biais_two(self, var):
@@ -90,6 +97,7 @@ class Switch():
         if not isinstance(var, bool):
             raise TypeError(" var must me a boolean but got "+str(var))
         self.dccobject.f2 = var
+
     biais_two = property(_get_biais_two, _set_biais_two)
 
     def _get_light(self):
@@ -98,8 +106,11 @@ class Switch():
         -------
         TYPE
             DESCRIPTION : return the current state of the light
-
         """
+    biais2 = property(_get_biais2, _set_biais2)
+    
+    def _get_light_1(self):
+        """ return the current state of the light 1"""
         return self.dccobject.fl
 
     def _set_light(self, var):
