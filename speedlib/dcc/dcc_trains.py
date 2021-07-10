@@ -6,7 +6,7 @@ from speedlib.dcc import dcc_object
 from speedlib.dcc.dcc_object import DCCObject
 
 
-class Train(object):
+class Train():
     """
         Train class
     """
