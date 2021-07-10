@@ -11,8 +11,8 @@
     system for overall management
 """
 # -*-coding: <Utf-8> -*-
-import dcc_object
-from dcc_object import DCCObject
+from speedlib.dcc import dcc_object
+from speedlib.dcc.dcc_object import DCCObject
 
 class Switch():
     """ This class is used to control Servo motors """
@@ -74,12 +74,6 @@ class Switch():
             DESCRIPTION : Returns the current state of the switch
 
         """
-
-    biais1 = property(_get_biais1, _set_biais1)
-    
-    def _get_biais2(self):
-        """Returns the current state of the switch """
-
         return self.dccobject.f2
 
     def _set_biais_two(self, var):
@@ -107,10 +101,6 @@ class Switch():
         TYPE
             DESCRIPTION : return the current state of the light
         """
-    biais2 = property(_get_biais2, _set_biais2)
-    
-    def _get_light_1(self):
-        """ return the current state of the light 1"""
         return self.dccobject.fl
 
     def _set_light(self, var):
@@ -139,5 +129,4 @@ if __name__ == "__main__":
     dcc_object.start()
     S.biais_one = True
     S.biais_two = True
-    print(S)
     dcc_object.stop()
