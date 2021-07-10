@@ -1,18 +1,33 @@
 """
-    Created on Tue May 4 2021
+    Copyright (C) 2021  CNRS
+    This file is part of "Speedlib".
+    "Speedlib" is an API built for the use case of autonomous navigation.
+    It has  been developed to control quay cranes and trains of multimodal
+    waterborne Lab as part of The SPEED project, a project which aims to
+    enhance and support the growth of a system of connected port solutions,
+    with the use of data science and IoT (Internet of Things) technologies.
+    The library allows controlling the motion of the IoT devices at H0 scale
+    in automatic mode, in three directions and exchanging with the information
+    system for overall management
 """
 # -*-coding: <Utf-8> -*-
 from speedlib.dcc import dcc_object
 from speedlib.dcc.dcc_object import DCCObject
 
-class Switch(object):
-    """
-        Switch class
-    """
+class Switch():
+    """ This class is used to control Servo motors """
     def __init__(self, name, adress):
         """
-            this function takes a name and an address (an integer # 0) as
-			parameters to create a train and  register it  on the controller
+        Parameters
+        ----------
+        name : string
+            DESCRIPTION : It is the name of the train
+        adress : int
+            DESCRIPTION This is the address on which it was programmed
+        Returns
+        -------
+        None.
+
         """
         if not isinstance(name, str):
             raise TypeError(" name must be a str but got " +str(name))
@@ -23,44 +38,95 @@ class Switch(object):
         self.dccobject = DCCObject(name, adress)
 
 
-    def _get_biais1(self):
-        """Returns the current state of the switch """
+    def _get_biais_one(self):
+        """
+        Returns
+        -------
+        TYPE
+            DESCRIPTION : Returns the current state of the switch
+
+        """
         return self.dccobject.f1
 
-    def _set_biais1(self, var):
-        """ change the state of the switch """
+    def _set_biais_one(self, var):
+        """
+        Parameters
+        ----------
+        var : Boolean
+            DESCRIPTION : change the state of the switch
+
+        Returns
+        -------
+        None.
+
+        """
+        if not isinstance(var, bool):
+            raise TypeError(" var must me a boolean but got "+str(var))
         self.dccobject.f1 = var
-    biais1 = property(_get_biais, _set_biais)
-    
-    def _get_biais2(self):
-        """Returns the current state of the switch """
+    biais_one = property(_get_biais_one, _set_biais_one)
+
+    def _get_biais_two(self):
+        """
+        Returns
+        -------
+        TYPE
+            DESCRIPTION : Returns the current state of the switch
+
+        """
         return self.dccobject.f2
 
-    def _set_biais2(self, var):
-        """ change the state of the switch """
+    def _set_biais_two(self, var):
+        """
+        Parameters
+        ----------
+        var : Boolean
+            DESCRIPTION : change the state of the switch
+
+        Returns
+        -------
+        None.
+
+        """
+        if not isinstance(var, bool):
+            raise TypeError(" var must me a boolean but got "+str(var))
         self.dccobject.f2 = var
-    biais2 = property(_get_biais, _set_biais)
-    
-    def _get_light_1(self):
-        """ return the current state of the light 1"""
+    biais_two = property(_get_biais_two, _set_biais_two)
+
+    def _get_light(self):
+        """
+        Returns
+        -------
+        TYPE
+            DESCRIPTION : return the current state of the light
+
+        """
         return self.dccobject.fl
-    
-    def _set_light_1(self, var):
-        """ change the state of the light 1 """
-        self.dccobject.fl = var
-    light_1 = property(_get_light_1, _set_light_1)
-    
-    def light_2(self):
-        """ change the state of the light 2 """
-        self.dccobject.reverse()
-        
-    
-     
+
+    def _set_light(self, var):
+        """
+        Parameters
+        ----------
+        var : Boolean
+            DESCRIPTION : change the state of the light
+
+        Returns
+        -------
+        None.
+
+        """
+        if not isinstance(var, bool):
+            raise TypeError(" var must me a boolean but got "+str(var))
+        if var is True:
+            self.dccobject.fl = var
+        else:
+            self.dccobject.reverse()
+    light = property(_get_light, _set_light)
+
 
 if __name__ == "__main__":
     S = Switch("DCC3", 3)
     dcc_object.start()
-    S.biais1 = True
-    S.biais2 = True
+    S.biais_one = True
+    S.biais_two = True
     print(S)
     dcc_object.stop()
