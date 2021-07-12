@@ -64,18 +64,17 @@ class Crane():
         -------
         None.
         """
+        if id_moteur not in self.dict_q.keys() :
+            raise RuntimeError("motor_id Error")
         while True:
-            if id_moteur in self.dict_q.keys() :
-                arguments = self.dict_q[id_moteur].get()
-                init_time = time.time()*ureg.second
-                print("start")
-                while time.time()*ureg.second - init_time < arguments[0]:
-                    self.start(arguments[1], arguments[2])
-                print("stop")
-                self.stop(arguments[1])
-                self.dict_q[id_moteur].task_done()
-            else:
-                raise RuntimeError("motor_id Error")
+            arguments = self.dict_q[id_moteur].get()
+            init_time = time.time()*ureg.second
+            while time.time()*ureg.second - init_time < arguments[0]:
+                self.start(arguments[1], arguments[2])
+                if not self.dict_q[id_moteur].empty():
+                     break
+            self.stop(arguments[1])
+            self.dict_q[id_moteur].task_done()
 
 
 
@@ -382,8 +381,8 @@ if __name__ == "__main__":
     crane_2.init(i_p1)
 
 
-    crane_1.start_for(0.01*ureg.second, MOTOR_SPREADER, MOTOR_DIRECTION_BACKWARD )
-    crane_2.start_for(0.01*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
+    crane_1.start_for(1*ureg.second, MOTOR_SPREADER, MOTOR_DIRECTION_BACKWARD )
+    crane_2.start_for(1*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
 
     crane_1.start_for(2*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
     print(crane_1.fswitch(10))
