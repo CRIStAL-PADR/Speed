@@ -74,7 +74,7 @@ class Switch():
             DESCRIPTION : Returns the current state of the switch
 
         """
-        return self.dccobject.f2
+        return self.dccobject.f2, self.dccobject.fl
 
     def _set_biais_two(self, var):
         """
@@ -91,37 +91,14 @@ class Switch():
         if not isinstance(var, bool):
             raise TypeError(" var must me a boolean but got "+str(var))
         self.dccobject.f2 = var
+        if var is True:
+            self.dccobject.fl = var
+        if var is False:
+            self.dccobject.reverse()
 
     biais_two = property(_get_biais_two, _set_biais_two)
 
-    def _get_light(self):
-        """
-        Returns
-        -------
-        TYPE
-            DESCRIPTION : return the current state of the light
-        """
-        return self.dccobject.fl
 
-    def _set_light(self, var):
-        """
-        Parameters
-        ----------
-        var : Boolean
-            DESCRIPTION : change the state of the light
-
-        Returns
-        -------
-        None.
-
-        """
-        if not isinstance(var, bool):
-            raise TypeError(" var must me a boolean but got "+str(var))
-        if var is True:
-            self.dccobject.fl = var
-        else:
-            self.dccobject.reverse()
-    light = property(_get_light, _set_light)
 
 
 if __name__ == "__main__":
