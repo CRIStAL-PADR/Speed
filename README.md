@@ -9,6 +9,7 @@ Currently the API has an unique backend allowing to control miniature devices li
 
 Examples
 ^^^^^^^^
+
 Controlling a Faller (c) crane model
 -------------------------------------
 
@@ -18,7 +19,7 @@ Controlling a Faller (c) crane model
     >>> ip_2 = "172.17.217.217"
     >>> crane_1 = Crane()
     >>> crane_2 = Crane()
-    >>> crane_1.init(ip_1)
+    >>> crane_1.init(ip_0)
     >>> crane_2.init(ip_2)
     >>> crane_2.start_for(20*faller.ureg.millisecond,faller.MotorChassis,faller.MotorDirectionForward)
     >>> crane_1.change_speed(faller.MotorCrab, -40)
