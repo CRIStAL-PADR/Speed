@@ -71,8 +71,8 @@ class Switch():
         None.
 
         """
-        #if not isinstance(state, bool):
-            #raise TypeError(" var must me a boolean but got "+str(state))
+        if not isinstance(state, bool):
+            raise TypeError(" var must me a boolean but got "+str(state))
 
         if self.biais_id == 1:
             self.dccobject.f1 = state
@@ -81,7 +81,7 @@ class Switch():
         elif self.biais_id == 2:
             self.dccobject.f2 = state
             self.dccobject.reverse()
-            
+
 
     biais = property(_get_biais, _set_biais)
 
@@ -92,5 +92,3 @@ if __name__ == "__main__":
     dcc_object.start()
     S.biais = False
     dcc_object.stop()
-    
-    
