@@ -16,7 +16,7 @@ from speedlib.dcc.dcc_object import DCCObject
 
 class Switch():
     """ This class is used to control Servo motors """
-    def __init__(self, name, adress):
+    def __init__(self, name, adress, biais_id):
         """
         Parameters
         ----------
@@ -24,21 +24,32 @@ class Switch():
             DESCRIPTION : It is the name of the train
         adress : int
             DESCRIPTION This is the address on which it was programmed
+        biais_id : int
+            DESCRIPTION Allows you to choose which servomotor will be used
         Returns
         -------
         None.
 
         """
+        self.name = name
+        self.adress = adress
+        self.biais_id = biais_id
+
+        if not isinstance(self.biais_id, int):
+            raise TypeError("biais_id must be an int but got "+str(self.biais_id))
+        if self.biais_id not in [1,2]:
+            raise ValueError("biais_id must be an 1 or 2 but got "+str(self.biais_id))
         if not isinstance(name, str):
             raise TypeError(" name must be a str but got " +str(name))
         if not isinstance(adress, int):
             raise TypeError("adress must be an integer but got  " +str(adress))
         #if adress not in range(101, 126):
             #raise RuntimeError("""The address must be between 101 and 125 but got """+str(adress))
+
         self.dccobject = DCCObject(name, adress)
 
 
-    def _get_biais_one(self):
+    def _get_biais(self):
         """
         Returns
         -------
@@ -48,7 +59,7 @@ class Switch():
         """
         return self.dccobject.f1
 
-    def _set_biais_one(self, var):
+    def _set_biais(self, var):
         """
         Parameters
         ----------
@@ -62,48 +73,21 @@ class Switch():
         """
         if not isinstance(var, bool):
             raise TypeError(" var must me a boolean but got "+str(var))
-        self.dccobject.f1 = var
 
-    biais_one = property(_get_biais_one, _set_biais_one)
-
-    def _get_biais_two(self):
-        """
-        Returns
-        -------
-        TYPE
-            DESCRIPTION : Returns the current state of the switch
-
-        """
-        return self.dccobject.f2, self.dccobject.fl
-
-    def _set_biais_two(self, var):
-        """
-        Parameters
-        ----------
-        var : Boolean
-            DESCRIPTION : change the state of the switch
-
-        Returns
-        -------
-        None.
-
-        """
-        if not isinstance(var, bool):
-            raise TypeError(" var must me a boolean but got "+str(var))
-        self.dccobject.f2 = var
-        if var is True:
+        if self.biais_id == 1:
+            self.dccobject.f1 = var
             self.dccobject.fl = var
-        if var is False:
+
+        elif self.biais_id == 2:
+            self.dccobject.f2 = var
             self.dccobject.reverse()
 
-    biais_two = property(_get_biais_two, _set_biais_two)
-
+    biais = property(_get_biais, _set_biais)
 
 
 
 if __name__ == "__main__":
-    S = Switch("DCC3", 3)
+    S = Switch("DCC3", 3, 1)
     dcc_object.start()
-    S.biais_one = True
-    S.biais_two = True
+    S.biais(True)
     dcc_object.stop()
