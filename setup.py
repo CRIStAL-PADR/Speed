@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="speedlib",
-    version="2.3.6",
+    version="2.3.7",
     author="Fabrice Dedo & Damien Marchal",
     author_email="komla-sam-fabrice.dedo@polytech-lille.net",
     description="A python library to operate 'Speed' devices",
@@ -14,6 +14,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/CRIStAL-PADR/Speed",
     packages=setuptools.find_packages(),
+    install_requires=[
+        'dccpi',
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
