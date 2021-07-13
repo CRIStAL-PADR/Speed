@@ -381,11 +381,11 @@ if __name__ == "__main__":
     crane_2.init(i_p1)
 
 
-    crane_1.start_for(1*ureg.second, MOTOR_SPREADER, MOTOR_DIRECTION_BACKWARD )
-    crane_2.start_for(1*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
+    crane_1.start_for(0.01*ureg.second, MOTOR_SPREADER, MOTOR_DIRECTION_BACKWARD )
+    crane_2.start_for(0.01*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
 
-    crane_1.start_for(2*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
-    print(crane_1.fswitch(10))
+    crane_1.start_for(0.092*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
+    print(crane_1.fswitch(0))
     print(crane_1.battery)
     print(crane_1.change_speed(MOTOR_CRAB, -40))
     crane_2.start_for(0.01*ureg.second, MOTOR_CHASSIS , MOTOR_DIRECTION_FORWARD )
