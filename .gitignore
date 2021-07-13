@@ -10,3 +10,6 @@ __pycache__/
 *.inv
 *yml
 
+dist/
+
+speedlib.egg-info/
