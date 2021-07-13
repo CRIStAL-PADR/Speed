@@ -48,6 +48,13 @@ class Switch():
 
         self.dccobject = DCCObject(name, adress)
 
+        def __repr__(self):
+        return """  Switche : Name = {},
+        address = {}, 
+        biais_id = {},  
+        biais = {} """.format(self.name, self.adress,
+                           self.biais_id, self.biais)
+
 
     def _get_biais(self):
         """
@@ -57,7 +64,25 @@ class Switch():
             DESCRIPTION : Returns the current state of the switch
 
         """
-        return self.dccobject.f1, self.dccobject.fl
+        if self.biais_id == 1:
+            return self.dccobject.f1, self.dccobject.f_light
+        elif self.biais_id == 2:
+            return self.dccobjetc.f2
+    
+    def set_biais_id(self, id):
+        """
+        Parameters
+        ----------
+        var : int
+            DESCRIPTION : Allows to change the id of the swicth 
+                            that we would like to control
+
+        Returns
+        -------
+        None.
+
+        """
+        self.biais_id = id
 
     def _set_biais(self, state):
         """
