@@ -1,11 +1,11 @@
 Tutorial
 ========
- 
+
 Using the SpeedLib librairie
 ----------------------------
 A python library to operate Speed devices.
 
-Currently the API has an unique backend allowing to control miniature devices like the Faller (c) Crane or DCC trains. 
+Currently the API has an unique backend allowing to control miniature devices like the Faller (c) Crane or DCC trains.
 
 Examples
 ^^^^^^^^
@@ -28,17 +28,35 @@ Controlling a Faller (c) crane model
 Controlling a DCC train model
 -----------------------------
 
-    >>> from speedlib.trains import dcc
-    >>> from speedlib.trains.dcc import Train
-    >>> train1 = Train("DCC3",3)
-    >>> train2 = Train("DCC1",1)
-    >>> dcc.start()
-    >>> train1.speed = 14
-    >>> train1.faster()
-    >>> train1.slower()
-    >>> train1.fl = True 
-    >>> print(train1)
-    >>> dcc.stop()
+    >>> from speedlib.dcc import dcc_object, dcc_trains
+    >>> from speedlib.dcc.dcc_object import DCCObject
+    >>>from speedlib.dcc .dcc_trains import Train
+
+    >>> train = Train("DCC15",15)
+    >>> dcc_object.start()
+    >>> train.speed = 14
+    >>> train.faster()
+    >>> train.slower()
+    >>> train.fl_light = True
+    >>> print(train)
+    >>> train.f2 = False
+    >>> dcc_object.stop()
+
+Controlling a DCC Switch model
+-------------------------------
+
+    >>> from speedlib.dcc import dcc_object, dcc_switches
+    >>> from speedlib.dcc.dcc_object import DCCObject
+    >>>from speedlib.dcc .dcc_switches import Switch
+
+    >>> SS = Switch("DCC",3, 1)
+    >>> dcc_object.start()
+    >>> print(S.biais)
+    >>> S.biais = True
+    >>> S.set_biais_id(2)
+    >>> S.biais = True
+    >>> S.biais = False
+    >>> dcc_object.stop()
 
 You can find more examples in the *examples* directory.
 
