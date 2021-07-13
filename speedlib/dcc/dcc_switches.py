@@ -11,9 +11,9 @@
     system for overall management
 """
 # -*-coding: <Utf-8> -*-
-import dcc_object
-from dcc_object import DCCObject
-import time
+from speedlib.dcc import dcc_object
+from speedlib.dcc.dcc_object import DCCObject
+
 class Switch():
     """ This class is used to control Servo motors """
     def __init__(self, name, adress, biais_id):
@@ -91,5 +91,4 @@ if __name__ == "__main__":
     S = Switch("DCC3", 3, 2)
     dcc_object.start()
     S.biais = False
-    time.sleep(3)
     dcc_object.stop()
