@@ -13,7 +13,6 @@
 # -*-coding: <Utf-8> -*-
 from speedlib.dcc import dcc_object
 from speedlib.dcc.dcc_object import DCCObject
-import time
 
 biais1 = 1
 biais2 = 2
@@ -103,7 +102,5 @@ if __name__ == "__main__":
     S = Switch("DCC3", 3)
     dcc_object.start()
     S.biais = [biais1, True]
-    time.sleep(1)
-    time.sleep(1)
     S.biais = [biais1, False]
     dcc_object.stop()
