@@ -15,6 +15,9 @@ from speedlib.dcc import dcc_object
 from speedlib.dcc.dcc_object import DCCObject
 import time
 
+biais1 = 1
+biais2 = 2
+
 class Switch():
     """ This class is used to control Servo motors """
     def __init__(self, name, adress, biais_id):
@@ -61,27 +64,17 @@ class Switch():
             return self.dccobject.f1, self.dccobject.f_light
         elif self.biais_id == 2:
             return self.dccobject.f2
-    
-    def set_biais_id(self, id):
+
+
+    def _set_biais(self, arguments):
         """
         Parameters
         ----------
-        var : int
-            DESCRIPTION : Allows to change the id of the swicth 
-                            that we would like to control
-
-        Returns
-        -------
-        None.
-
-        """
-        self.biais_id = id
-
-    def _set_biais(self, state):
-        """
-        Parameters
-        ----------
-        var : Boolean
+        arguments : array
+        arguments[0] : int
+            DESCRIPTION :  represents the num of the servo motor we would like
+                           pilote
+        arguments[1] : bool
             DESCRIPTION : change the state of the switch
 
         Returns
@@ -89,15 +82,16 @@ class Switch():
         None.
 
         """
-        if not isinstance(state, bool):
-            raise TypeError(" var must me a boolean but got "+str(state))
+        self.biais_id = arguments[0]
+        if not isinstance(arguments[1], bool):
+            raise TypeError(" var must me a boolean but got "+str(arguments[1]))
 
         if self.biais_id == 1:
-            self.dccobject.f1 = state
-            self.dccobject.f_light = state
+            self.dccobject.f1 = arguments[1]
+            self.dccobject.f_light = arguments[1]
 
         elif self.biais_id == 2:
-            self.dccobject.f2 = state
+            self.dccobject.f2 = arguments[1]
             self.dccobject.reverse()
 
 
@@ -108,10 +102,8 @@ class Switch():
 if __name__ == "__main__":
     S = Switch("DCC3", 3, 2)
     dcc_object.start()
-    S.biais = True
+    S.biais = [biais1, True]
     time.sleep(1)
-    S.set_biais_id(1)
     time.sleep(1)
-    S.biais = False
+    S.biais = [biais1, False]
     dcc_object.stop()
-    
