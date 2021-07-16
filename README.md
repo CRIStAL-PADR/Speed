@@ -47,16 +47,15 @@ Controlling a DCC Switch model
 
     >>> from speedlib.dcc import dcc_object, dcc_switches
     >>> from speedlib.dcc.dcc_object import DCCObject
-    >>>from speedlib.dcc .dcc_switches import Switch
+    >>> from speedlib.dcc.dcc_switches import Switch
 
-    >>> SS = Switch("DCC",3, 1)
-    >>> dcc_object.start()
+    >>> S = Switch("DCC",3)
+    >>> dcc_object.start() #Start the controller. Removes brake signal
     >>> print(S.biais)
-    >>> S.biais = True
-    >>> S.set_biais_id(2)
-    >>> S.biais = True
-    >>> S.biais = False
-    >>> dcc_object.stop()
+    >>> S.biais = [dcc_switches.biais1, True] #change the state of the biais
+    >>> S.biais = [dcc_switches.biais2, True] 
+    >>> S.biais = [dcc_switches.biais1, True] 
+    >>> dcc_object.stop
 
 You can find more examples in the *examples* directory.
 
