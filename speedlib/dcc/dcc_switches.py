@@ -20,7 +20,7 @@ biais2 = 2
 
 class Switch():
     """ This class is used to control Servo motors """
-    def __init__(self, name, adress, biais_id):
+    def __init__(self, name, adress):
         """
         Parameters
         ----------
@@ -37,7 +37,7 @@ class Switch():
         """
         self.name = name
         self.adress = adress
-        self.biais_id = biais_id
+        self.biais_id = 1
 
         if not isinstance(self.biais_id, int):
             raise TypeError("biais_id must be an int but got "+str(self.biais_id))
@@ -100,7 +100,7 @@ class Switch():
 
 
 if __name__ == "__main__":
-    S = Switch("DCC3", 3, 2)
+    S = Switch("DCC3", 3)
     dcc_object.start()
     S.biais = [biais1, True]
     time.sleep(1)
