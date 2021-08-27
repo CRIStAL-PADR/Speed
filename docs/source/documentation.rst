@@ -14,6 +14,10 @@ Train API features
 * Set speed  and direction
 * Set FL (lights), F1-F4 functions
  
+Switch API features
+^^^^^^^^^^^^^^^^^^^
+.. note ::
+    TODO
 
 Crane API features 
 ^^^^^^^^^^^^^^^^^^
@@ -38,11 +42,15 @@ Software requirements
 Hardware requirements
 ^^^^^^^^^^^^^^^^^^^^^
 
-For DCC train model
--------------------
+For DCC train and switch model
+------------------------------
 * A Raspberry Pi (developed/tested on model B+)
 * DCC-decoder-equipped locomotives and tracks.
 * The Raspberry Pi needs an additional booster circuit to actually provide the signal to the tracks. (See the photo of the artwork below)
+* A servo motor placed on the tracks
+* DCC decoder for the servo motor
+
+
 
 For the cranes
 ---------------
@@ -60,6 +68,13 @@ To install Speedlib, open a new Terminal window and type the following command
     Then enter the following command line to install it
 
     >>> sudo python setup.py install
+
+
+Controlling a DCC switch model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. note::
+    TODO
+
 
 Controlling a DCC train model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -138,3 +153,9 @@ To starts the unit tests you can do:
 cd tests/
     >>> PYTHONPATH=../ python3 -m unittest
 
+.. note::
+    It is also possible to control devices using `ros <http://wiki.ros.org/fr>`_ thanks to the `SpeedRos <https://github.com/CRIStAL-PADR/SpeedRos>`_ library
+
+
+SpeedRos documentation
+======================

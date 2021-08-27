@@ -1,3 +1,5 @@
+
+# -*-coding: <Utf-8> -*-
 """
     Copyright (C) 2021  CNRS
     This file is part of "Speedlib".
@@ -10,7 +12,6 @@
     in automatic mode, in three directions and exchanging with the information
     system for overall management
 """
-# -*-coding: <Utf-8> -*-
 from speedlib.dcc import dcc_object
 from speedlib.dcc.dcc_object import DCCObject
 
@@ -60,9 +61,9 @@ class Switch():
 
         """
         if self.biais_id == 1:
-            return self.dccobject.f1, self.dccobject.f_light
+            return biais1, self.dccobject.f1, self.dccobject.f_light
         elif self.biais_id == 2:
-            return self.dccobject.f2
+            return biais2, self.dccobject.f2
 
 
     def _set_biais(self, arguments):

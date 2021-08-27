@@ -380,19 +380,18 @@ if __name__ == "__main__":
     crane_1.init(i_p1)
     crane_2.init(i_p1)
 
+    print(crane_1.fswitch(100))
+    #crane_1.start_for(1*ureg.second, MOTOR_SPREADER, MOTOR_DIRECTION_FORWARD )
+    #crane_2.start_for(0.01*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
 
-    crane_1.start_for(0.01*ureg.second, MOTOR_SPREADER, MOTOR_DIRECTION_BACKWARD )
-    crane_2.start_for(0.01*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
-
-    crane_1.start_for(0.092*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_FORWARD )
+    crane_1.start_for(10*ureg.second, MOTOR_CRAB, MOTOR_DIRECTION_BACKWARD )
     print(crane_1.fswitch(0))
     print(crane_1.battery)
     print(crane_1.change_speed(MOTOR_CRAB, -40))
-    crane_2.start_for(0.01*ureg.second, MOTOR_CHASSIS , MOTOR_DIRECTION_FORWARD )
+    #crane_2.start_for(1*ureg.second, MOTOR_CHASSIS , MOTOR_DIRECTION_BACKWARD )
 
     print(crane_2.change_speed(MOTOR_SPREADER,20))
     print(crane_2.battery)
     crane_2.step(MOTOR_CHASSIS  ,MOTOR_DIRECTION_BACKWARD )
     crane_1.step(MOTOR_CRAB, MOTOR_DIRECTION_BACKWARD )
     print (crane_1.get_speed(MOTOR_CRAB))
-
