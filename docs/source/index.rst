@@ -4,7 +4,8 @@ Welcome to speedlib's documentation!
 .. toctree::
    :maxdepth: 3
 
-   documentation
+   SpeedlibDocumentation
+   SpeedRosDocumentation
    booster_circuit
    license
    

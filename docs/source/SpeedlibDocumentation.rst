@@ -37,7 +37,7 @@ Software requirements
 * `dccpi` : It should be auto-feched when installing speedlib. If not, you can download it here : `dccpi <https://pypi.org/project/dccpi/>`_
 * `bitstring` module details. Should be auto-fetched when installing with pip.
 * `wiringPi` : download and install `wiringPi <http://wiringpi.com/download-and-install/>`_
-* Since wiringPi uses low-level mechanisms to access pins, dccpi programs must be run as root
+* Since wiringPi uses low-level mechanisms to access pins, speedlib programs must be run as root
 
 Hardware requirements
 ^^^^^^^^^^^^^^^^^^^^^
@@ -67,7 +67,10 @@ To install Speedlib, open a new Terminal window and type the following command
     Clone the project in a local directory with `Speedlib <https://github.com/CRIStAL-PADR/Speed.git>`_ 
     Then enter the following command line to install it
 
-    >>> sudo python setup.py install
+    .. code-block:: console
+    
+        $ sudo python setup.py install
+
 
 
 Controlling a DCC switch model
@@ -146,16 +149,5 @@ We can then control the motor of the crane.With the start_for function you can m
 You can also change the speed with the change_speed method or give a speed with the set_speed method
     >>> crane_1.change_speed(faller.MotorCrab, -40)
 
-Tests
-^^^^^
-To starts the unit tests you can do:
-
-cd tests/
-    >>> PYTHONPATH=../ python3 -m unittest
-
 .. note::
-    It is also possible to control devices using `ros <http://wiki.ros.org/fr>`_ thanks to the `SpeedRos <https://github.com/CRIStAL-PADR/SpeedRos>`_ library
-
-
-SpeedRos documentation
-======================
+    It is also possible to control devices using ROS thanks to the SpeedRos library
