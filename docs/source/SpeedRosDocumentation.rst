@@ -29,8 +29,8 @@ Building a SpeedRos workspace and sourcing the setup file
 
 .. code-block:: console
 
-    $ cd ~/.../SpeedRos
-    $ catkin_make
+    cd ~/.../SpeedRos
+    catkin_make
 
 Once the workspace was built, it created a similar structure in the devel subfolder which you usually find under / opt / ros / $ ROSDISTRO_NAME
 
@@ -183,3 +183,24 @@ To print information about the switch her is the command :
 .. code-block:: console
     
     rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais_info; switch_number : 6' "
+
+For the debugging
+=================
+
+Usually we can use the tab to help us enter the ros command lines. However, sometimes the tab does not work. This can be due to 2 potential errors:
+
+* the node file is not an executable. To correct this, just write in the terminal: 
+    .. code-block:: console
+        
+        chmod + x file.py
+
+* the Setup file is not well sourced.
+
+.. note::
+    We can also use a debugging command to find out if the ros node that we have launched has been properly initialized
+
+    .. code-block:: console
+        
+        roswtf
+
+This command allows you to know which ros nodes are running on the machine.
