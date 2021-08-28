@@ -1,3 +1,4 @@
+======================
 Speedlib documentation
 ======================
 
@@ -7,7 +8,7 @@ as well as the portic of the faller brand. It is made up of 2 librairies:
 * The cranes library which controls the cranes
 
 Train API features
-^^^^^^^^^^^^^^^^^^
+==================
 * Easy to install and use
 * Should works on multiple RPi operating systems
 * Control DCC locomotives using plain Python
@@ -15,12 +16,12 @@ Train API features
 * Set FL (lights), F1-F4 functions
  
 Switch API features
-^^^^^^^^^^^^^^^^^^^
+===================
 .. note ::
     TODO
 
 Crane API features 
-^^^^^^^^^^^^^^^^^^
+==================
 * Easy to install and use
 * Should work on any linux system
 * At the moment only works for Faller (c) crane model
@@ -32,7 +33,7 @@ Crane API features
     The train API only works on a Raspberry
 
 Software requirements
-^^^^^^^^^^^^^^^^^^^^^
+=====================
 * python_requires = `>=3.6`
 * `dccpi` : It should be auto-feched when installing speedlib. If not, you can download it here : `dccpi <https://pypi.org/project/dccpi/>`_
 * `bitstring` module details. Should be auto-fetched when installing with pip.
@@ -40,7 +41,7 @@ Software requirements
 * Since wiringPi uses low-level mechanisms to access pins, speedlib programs must be run as root
 
 Hardware requirements
-^^^^^^^^^^^^^^^^^^^^^
+=====================
 
 For DCC train and switch model
 ------------------------------
@@ -57,7 +58,7 @@ For the cranes
 * Faller brand portics
 
 Installation
-^^^^^^^^^^^^
+============
 To install Speedlib, open a new Terminal window and type the following command
 
 * From pip
@@ -74,13 +75,13 @@ To install Speedlib, open a new Terminal window and type the following command
 
 
 Controlling a DCC switch model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+==============================
 .. note::
     TODO
 
 
 Controlling a DCC train model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=============================
 Here is an example of how to use the Train library to control a locomotive and its accessories
 
 We will first import the train library that will allow us to control the locomotive as well as the accessories
@@ -123,7 +124,7 @@ Make an emergency stop by activating the brake signal on the tracks
    Always properly stop the program as we have seen below. Otherwise locos will receive DC current directly, and either burn or turn into DC mode (at full speed). 
 
 Controlling a Faller (c) crane model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+====================================
 Here is an example of how to use the Crane library to control cranes
 
 To start, we will first import the crane library
