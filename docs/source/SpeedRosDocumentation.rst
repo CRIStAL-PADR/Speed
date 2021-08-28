@@ -10,7 +10,7 @@ Software requirements
 In addition to the speedlib software requirements, SpeedRos to work requires:
 
 * Ubuntu mate
-* `speedlib`: Install and download  `speedlib <https://cristal-padrspeed.readthedocs.io/en/latest/documentation.html#installation>`_
+* `speedlib`: Install and download  `speedlib <https://pypi.org/project/speedlib/>`_
 
 * `ROS` : Install `ROS <http://wiki.ros.org/ROS/Installation>`_
 
@@ -20,7 +20,7 @@ Hardware requirements
 Same for speedlib see : speedlib Hardware requirements
 
 Building a SpeedRos workspace and sourcing the setup file
-=========================================================
+=========================================================https://pypi.org/project/speedlib/
 * Knowing how to use ROS
 
 .. note::
