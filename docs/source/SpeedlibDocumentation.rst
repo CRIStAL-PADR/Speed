@@ -17,8 +17,10 @@ Train API features
  
 Switch API features
 ===================
-.. note ::
-    TODO
+* Easy to install and use
+* Should works on multiple RPi operating systems
+* Control DCC locomotives using plain Python
+* Set biais state
 
 Crane API features 
 ==================
@@ -76,8 +78,40 @@ To install Speedlib, open a new Terminal window and type the following command
 
 Controlling a DCC switch model
 ==============================
+Here is an example of how to use the Switch library to control servo motor and set biais state
+
+We will first import the switch library.
+    >>> from speedlib.dcc import dcc_object, dcc_switches
+    >>> from speedlib.dcc.dcc_object import DCCObject
+    >>> from speedlib.dcc .dcc_switches import Switch
+
+Once we have imported the library, we will initialize the switch by specifying the address and the name of the the switch
+
+    >>> S = Switch("DCC3",3)
+
+Now we can remove break signal by starting the controller
+    >>> dcc_object.start()
+
+We can change the state of the biais 
+
+    >>> S.biais = [dcc_switches.biais2, True]
+    >>> S.biais = [dcc_switches.biais1, True]
+
 .. note::
-    TODO
+    Every switch is made of 2 biais.
+
+
+To obtain information on the switch and it bias we can do a print
+    >>> print(S.biais)
+
+To stop controlling the switches , we just have to put the break signal back on by
+stoppind the controller
+
+    >>> dcc_object.stop()
+
+.. Warning::
+    Since the switches and trains are all connected to dcc, do a dcc_object.stop ()
+    will mean that we stop both trains and switches and that is not necessarily the objective. It is better to use it only in the case where you would like to stop everything
 
 
 Controlling a DCC train model
@@ -85,8 +119,9 @@ Controlling a DCC train model
 Here is an example of how to use the Train library to control a locomotive and its accessories
 
 We will first import the train library that will allow us to control the locomotive as well as the accessories
-    >>> from speedlib.trains import dcc
-    >>> from speedlib.trains.dcc import Train
+    >>> from speedlib.dcc import dcc_object, dcc_trains
+    >>> from speedlib.dcc.dcc_object import DCCObject
+    >>> from speedlib.dcc .dcc_trains import Train
 
 Once we have imported the library, we will initialize the trains by specifying the address and the name of the locomotive
     >>> train1 = Train("DCC1", 1)
@@ -97,7 +132,7 @@ Once we have imported the library, we will initialize the trains by specifying t
     Likewise, the different instantiated trains must not have the same name or the same address.
 
 Now we can remove break signal by starting the controller
-    >>> dcc.start()
+    >>> dcc_object.start()
 
 We can then change the speed of the train, slow down, accelerate or even turn on one of the functions used by the accessories.
     >>> train1.speed = 14
@@ -118,7 +153,7 @@ Mettre la vitesse à 0 ou à une valeur inférieur à 5
     >>> print(train1.speed)
 
 Make an emergency stop by activating the brake signal on the tracks
-    >>> dcc.stop()
+    >>> dcc_object.stop()
 
 .. Warning::
    Always properly stop the program as we have seen below. Otherwise locos will receive DC current directly, and either burn or turn into DC mode (at full speed). 
