@@ -17,22 +17,28 @@ In addition to the speedlib software requirements, SpeedRos to work requires:
 
 Hardware requirements
 =====================
-Same for speedlib see : speedlib Hardware requirements
+In addition to the hardware configuration required for speedlib it is necessary to add to that a Tquad
 
 Building a SpeedRos workspace and sourcing the setup file
-=========================================================https://pypi.org/project/speedlib/
+=========================================================
 * Knowing how to use ROS
 
 .. note::
-    Before starting, it is imperative to create a local working directory in which to clone the remote repository of SpeedROS . Once it's done, you have to build 
-    the packages in the SpeedRos workspace 
+    Before starting, it is imperative to create a local working directory in which to clone the remote 
+    repository of SpeedROS .Once this is done, the tquad directory must be moved to the raspberry which
+    is on the tquad. This means that we will have two working spaces. The working space SpeedRos which
+    will contain the train, switch and crane and a second one whitch is the tquad working space that we
+    have to move in the tquad's raspberry
+
+.. warning:: 
+    This step must be fulfilled otherwise the catkin_make command will generated errors
 
 .. code-block:: console
 
     $ cd ~/.../SpeedRos
     $ catkin_make
 
-Once the workspace was built, it created a similar structure in the devel subfolder which you usually find under / opt / ros / $ ROSDISTRO_NAME
+Once the workspace was built, it created a similar structure in the devel subfolder which you usually find under /opt/ros/$ROSDISTRO_NAME
 
 To add the workspace to your ROS environment you need to source the generated setup file:
 
@@ -161,7 +167,8 @@ Open a second terminal and run the following command:
     $ rosrun switch switch_pilot.py 8 3
 
 .. note::
-    Like the train, the first parameter is the number of switch that we want to initialize. The second parameter designates the address or number of the first switch to be initialized
+    Like the train, the first parameter is the number of switch that we want to initialize. The second parameter designates 
+    the address or number of the first switch to be initialized
 
 Open a third terminal and run the following command:
 
@@ -183,6 +190,24 @@ To print information about the switch her is the command :
 .. code-block:: console
     
     $ rostopic pub /switch/command std_msgs/String " data : 'switch_command : biais_info; switch_number : 6' "
+
+Controlling T-Quad using ROS
+============================
+You must install and configure the T-quad beforehand. To do this, follow
+`the installation guide <https://github.com/CRIStAL-PADR/SpeedRos/blob/master/src/tquad/Installation_Guide.md>`_
+
+If you want to control the T-quad with the keyboard keys, open a terminal and
+run the following command:
+
+.. code-block:: console
+
+    $ roslaunch tquad tquad_teleop.launch
+
+If you want to control the tquad with a rosbridge client, open a terminal and run the following command:
+
+.. code-block:: console
+
+    $ roslaunch tquad tquad_bridge.launch
 
 For the debugging
 =================
